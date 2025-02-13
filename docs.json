@@ -82,6 +82,11 @@
         "label": "Git Hub",
         "href": "https://github.com/orgs/relytcloud"
       }
-    ]
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Get Started",
+      "href": "https://powerdrill.ai"
+    }
   }
 }

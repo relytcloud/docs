@@ -33,15 +33,6 @@
         ],
         "parameters": [
           {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "x-pd-external-trace-id",
             "in": "header",
             "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
@@ -185,7 +176,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       },
       "get": {
         "summary": "List sessions",
@@ -228,15 +223,6 @@
             "name": "user_id",
             "in": "query",
             "description": "用户 ID，即您在组织中的唯一身份标识。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -456,7 +442,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/sessions/{id}": {
@@ -472,15 +462,6 @@
             "name": "id",
             "in": "path",
             "description": "要修改的会话 ID。\n\n如需查看项目中存在的会话，请调用 [GET /v2/team/sessions](/api-reference/list-sessions) 接口。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -602,7 +583,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       },
       "delete": {
         "summary": "Delete session",
@@ -616,15 +601,6 @@
             "name": "id",
             "in": "path",
             "description": "要删除的会话 ID。\n\n如需查看项目中存在的会话，请调用 [GET /v2/team/sessions](/api-reference/list-sessions) 接口。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -695,7 +671,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       },
       "get": {
         "summary": "Get session",
@@ -718,15 +698,6 @@
             "name": "user_id",
             "in": "query",
             "description": "用户 ID，即您在组织中的唯一身份标识。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -855,7 +826,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/sessions/{id}/history": {
@@ -898,15 +873,6 @@
             "name": "user_id",
             "in": "query",
             "description": "用户 ID，即您在组织中的唯一身份标识。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -1210,7 +1176,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/datasets/{id}/overview": {
@@ -1235,15 +1205,6 @@
             "name": "user_id",
             "in": "query",
             "description": "用户 ID，即您在组织中的唯一身份标识。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -1356,7 +1317,11 @@
             "headers": {}
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/datasets": {
@@ -1368,15 +1333,6 @@
           "Dataset"
         ],
         "parameters": [
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "x-pd-external-trace-id",
             "in": "header",
@@ -1474,7 +1430,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       },
       "get": {
         "summary": "List datasets",
@@ -1515,15 +1475,6 @@
             "name": "user_id",
             "in": "query",
             "description": "用户 ID，即您在组织中的唯一身份标识。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -1624,7 +1575,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/datasets/{id}": {
@@ -1640,15 +1595,6 @@
             "name": "id",
             "in": "path",
             "description": "目标数据集 ID。您只能删除自己创建的数据集。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -1719,7 +1665,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       },
       "post": {
         "summary": "Modify dataset",
@@ -1733,15 +1683,6 @@
             "name": "id",
             "in": "path",
             "description": "目标数据集 ID。您只能修改自己创建的数据集。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -1826,7 +1767,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/datasets/{id}/status": {
@@ -1851,15 +1796,6 @@
             "name": "user_id",
             "in": "query",
             "description": "用户 ID，即您在组织中的唯一身份标识。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -1944,7 +1880,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/datasets/{id}/datasources": {
@@ -1960,15 +1900,6 @@
             "name": "id",
             "in": "path",
             "description": "目标数据集 ID。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -2116,7 +2047,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       },
       "get": {
         "summary": "List data sources",
@@ -2174,15 +2109,6 @@
             "name": "user_id",
             "in": "query",
             "description": "用户 ID，即您在组织中的唯一身份标识。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -2322,7 +2248,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/datasets/{dataset_id}/datasources/{datasource_id}": {
@@ -2347,15 +2277,6 @@
             "name": "datasource_id",
             "in": "path",
             "description": "要删除的数据源 ID。\n\n如需查询指定数据集中的数据源，请调用 [GET /v2/team/datasets/{id}/datasources](/api-reference/list-data-sources) 接口。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -2427,7 +2348,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       },
       "get": {
         "summary": "Get data source",
@@ -2459,15 +2384,6 @@
             "name": "user_id",
             "in": "query",
             "description": "用户 ID，即您在组织中的唯一身份标识。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -2572,7 +2488,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/datasources": {
@@ -2584,15 +2504,6 @@
           "Data source"
         ],
         "parameters": [
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "x-pd-external-trace-id",
             "in": "header",
@@ -2706,7 +2617,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/datasets/{dataset_id}/datasources/{datasource_id}/presign": {
@@ -2731,15 +2646,6 @@
             "name": "datasource_id",
             "in": "path",
             "description": "目标数据源 ID。\n\n如需查询指定数据集中的数据源，请调用 [GET /v2/team/datasets/{id}/datasources](/api-reference/list-data-sources) 接口。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
             "required": true,
             "schema": {
               "type": "string"
@@ -2845,7 +2751,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/file/upload-datasource": {
@@ -2863,15 +2773,6 @@
             "description": "文件的 MIME 类型。可选值包括：\n\n- `text/csv`：如文件扩展名为 `.csv`。\n- `text/plain`：如文件扩展名为 `.txt`。\n- `text/markdown`：如文件扩展名为 `.md`。\n- `application/json`：如文件扩展名为 `.json`。\n- `application/pdf`：如文件扩展名为 `.pdf`。\n- `application/vnd.openxmlformats-officedocument.presentationml.presentation`：如文件扩展名为 `.pptx`。\n- `application/vnd.openxmlformats-officedocument.wordprocessingml.document`：如文件扩展名为 `.docx`。\n- `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`：如文件扩展名为 `.xlsx`。\n- `application/vnd.ms-powerpoint`：如文件扩展名为 `.ppt`。\n- `text/tab-separated-values`：如文件扩展名为 `.tsv`。",
             "required": true,
             "example": "multipart/form-data",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
-            "required": true,
             "schema": {
               "type": "string"
             }
@@ -2969,7 +2870,11 @@
             }
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     },
     "/v2/team/jobs": {
@@ -2981,15 +2886,6 @@
           "Job"
         ],
         "parameters": [
-          {
-            "name": "x-pd-api-key",
-            "in": "header",
-            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
           {
             "name": "x-pd-external-trace-id",
             "in": "header",
@@ -3320,7 +3216,11 @@
             "headers": {}
           }
         },
-        "security": []
+        "security": [
+          {
+            "apikey-header-x-pd-api-key": []
+          }
+        ]
       }
     }
   },
@@ -3601,13 +3501,18 @@
         ]
       }
     },
-    "securitySchemes": {}
-  },
-  "servers": [
-    {
-      "url": "http://app.ai.relyt.cn/app/api",
-      "description": "体验环境"
+    "securitySchemes": {
+      "apikey-header-x-pd-api-key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-pd-api-key"
+      }
     }
-  ],
-  "security": {}
+  },
+  "servers": [],
+  "security": [
+    {
+      "apikey-header-x-pd-api-key": []
+    }
+  ]
 }
