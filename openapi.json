@@ -1,0 +1,3613 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Team Open API Version 2 中文版本",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "Session"
+    },
+    {
+      "name": "Dataset"
+    },
+    {
+      "name": "Data source"
+    },
+    {
+      "name": "File"
+    },
+    {
+      "name": "Job"
+    }
+  ],
+  "paths": {
+    "/v2/team/sessions": {
+      "post": {
+        "summary": "Create session",
+        "deprecated": false,
+        "description": "创建会话。\n会话即用户与 Relyt AI 在单次对话中的持续交互过程。每个用户至多可以同时保留 150 个会话。达到此上限后，如需创建新会话，可以删除不再使用的会话后，再进行创建。",
+        "tags": [
+          "Session"
+        ],
+        "parameters": [
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "会话名称，至多可支持 128 个字符。如超过此限制，名称将被截断展示。"
+                  },
+                  "output_language": {
+                    "type": "string",
+                    "enum": [
+                      "AUTO",
+                      "EN",
+                      "ES",
+                      "AR",
+                      "PT",
+                      "ID",
+                      "JA",
+                      "RU",
+                      "HI",
+                      "FR",
+                      "DE",
+                      "VI",
+                      "TR",
+                      "PL",
+                      "IT",
+                      "KO",
+                      "ZH-CN",
+                      "ZH-TW"
+                    ],
+                    "default": "AUTO",
+                    "description": "Relyt AI 的回复语言。例如，当设置为 `EN` 时，则 Relyt AI 使用英语进行回复。如不指定，将使用默认值 `AUTO`，即 Relyt AI 会根据提示词自动选择合适的回复语言。可选值包括：\n\n- `AUTO`：根据提示词自动识别\n- `EN`：英语\n- `ES`：西班牙语\n- `AR`：阿拉伯语\n- `PT`：葡萄牙语\n- `ID`：印尼语\n- `JA`：日语\n- `RU`：俄语\n- `HI`：印地语\n- `FR`：法语\n- `DE`：德语\n- `VI`：越南语\n- `TR`：土耳其语\n- `PL`：波兰语\n- `IT`：意大利语\n- `KO`：韩语\n- `ZH-CN`：简体中文\n- `ZH-TW`：繁体中文"
+                  },
+                  "job_mode": {
+                    "type": "string",
+                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
+                    "enum": [
+                      "AUTO",
+                      "DATA_ANALYTICS"
+                    ],
+                    "default": "DATA_ANALYTICS"
+                  },
+                  "max_contextual_job_history": {
+                    "type": "integer",
+                    "description": "作为下一个任务上下文的历史任务数，取值范围为 `0` 到 `10`，默认值为 `10`。如设置为 `0`，则当前任务将不使用任何历史任务作为上下文信息。"
+                  },
+                  "agent_id": {
+                    "type": "string",
+                    "enum": [
+                      "DATA_ANALYSIS_AGENT"
+                    ],
+                    "default": "DATA_ANALYSIS_AGENT",
+                    "description": "AI 智能体的 ID。该参数为保留参数，无需制定或设置为 **DATA_ANALYSIS_AGENT**。"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "description": "用户 ID，即您在组织中的唯一身份标识。"
+                  }
+                },
+                "required": [
+                  "name",
+                  "user_id"
+                ]
+              },
+              "example": {
+                "name": "My session",
+                "output_language": "FR",
+                "job_mode": "AUTO",
+                "max_contextual_job_history": 10,
+                "agent_id": "DATA_ANALYSIS_AGENT",
+                "user_id": "tmm-dafasdfasdfasdf"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "description": "返回的数据对象。",
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "会话 ID。\n\n如后续要使用该会话来 [执行任务](/api-reference/create-job)，请保存该 ID。"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "id": "session-dasfasdgasdgfasdgasdg"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "List sessions",
+        "deprecated": false,
+        "description": "返回您创建的会话列表。\n",
+        "tags": [
+          "Session"
+        ],
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "description": "分页返回的起始页码。如不指定，则使用默认值 `1`。",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 1
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "每页返回的记录数量。如不指定，则使用默认值 `10`。",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "搜索关键词，最多支持 128 个字符。所有名称中包含该关键词的会话将被返回。\n\n如果省略此项，将列出所有会话。",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户 ID，即您在组织中的唯一身份标识。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total_items": {
+                          "type": "integer",
+                          "description": "返回的会话总数量。"
+                        },
+                        "page_number": {
+                          "type": "integer",
+                          "description": "当前页面的页码。"
+                        },
+                        "page_size": {
+                          "type": "integer",
+                          "description": "每页返回的会话数量。"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "会话 ID，会话在当前项目中的唯一标识。"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "会话名称。如名称长度超过 128 个字符，将仅返回前 128 个字符。"
+                              },
+                              "output_language": {
+                                "type": "string",
+                                "enum": [
+                                  "AUTO",
+                                  "EN",
+                                  "ES",
+                                  "AR",
+                                  "PT",
+                                  "ID",
+                                  "JA",
+                                  "RU",
+                                  "HI",
+                                  "FR",
+                                  "DE",
+                                  "VI",
+                                  "TR",
+                                  "PL",
+                                  "IT",
+                                  "KO",
+                                  "ZH-CN",
+                                  "ZH-TW"
+                                ],
+                                "default": "AUTO",
+                                "description": "Relyt AI 的返回语言。可能值包括：\n\n- `AUTO`：根据提示词自动识别\n- `EN`：英语\n- `ES`：西班牙语\n- `AR`：阿拉伯语\n- `PT`：葡萄牙语\n- `ID`：印尼语\n- `JA`：日语\n- `RU`：俄语\n- `HI`：印地语\n- `FR`：法语\n- `DE`：德语\n- `VI`：越南语\n- `TR`：土耳其语\n- `PL`：波兰语\n- `IT`：意大利语\n- `KO`：韩语\n- `ZH-CN`：简体中文\n- `ZH-TW`：繁体中文"
+                              },
+                              "job_mode": {
+                                "type": "string",
+                                "description": "任务类型。可能值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定任务是数据分析任务还是信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 根据您的输入进行数据分析。",
+                                "enum": [
+                                  "AUTO",
+                                  "DATA_ANALYTICS"
+                                ],
+                                "default": "DATA_ANALYTICS"
+                              },
+                              "max_contextual_job_history": {
+                                "type": "integer",
+                                "description": "在会话中保留作为下一个任务上下文的任务数量，取值范围为 `0` 到 `10`，默认值为 `10`。值为 `0` 时表示会话中的任务在执行时不会使用历史任务执行结果作为上下文信息。"
+                              },
+                              "agent_id": {
+                                "type": "string",
+                                "enum": [
+                                  "DATA_ANALYSIS_AGENT"
+                                ],
+                                "default": "DATA_ANALYSIS_AGENT",
+                                "description": "AI 智能体的 ID。该参数为保留参数，无实际意义，请忽略。"
+                              }
+                            },
+                            "description": "会话对象。",
+                            "required": [
+                              "id",
+                              "name"
+                            ]
+                          },
+                          "description": "当前页面返回的会话列表。"
+                        }
+                      },
+                      "required": [
+                        "total_items",
+                        "page_number",
+                        "page_size",
+                        "records"
+                      ],
+                      "description": "会话的分页列表。"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "total_items": 8,
+                        "page_size": 10,
+                        "page_number": 1,
+                        "records": [
+                          {
+                            "id": "04b69928-532d-408a-8716-8f5e70fcacc6",
+                            "name": "Finding Your Inner Spark",
+                            "output_language": "AUTO",
+                            "job_mode": "AUTO",
+                            "max_contextual_job_history": 10,
+                            "agent_id": "DATA_ANALYSIS_AGENT"
+                          },
+                          {
+                            "id": "7e9941af-ad1b-4834-a421-4b37b54aae19",
+                            "name": "session_trade_analyze_001",
+                            "output_language": "EN",
+                            "job_mode": "AUTO",
+                            "max_contextual_job_history": 1,
+                            "agent_id": "DATA_ANALYSIS_AGENT"
+                          },
+                          {
+                            "id": "a137ecc8-9554-42c3-b042-2458dd2aeb36",
+                            "name": "My first session",
+                            "output_language": "AUTO",
+                            "job_mode": "AUTO",
+                            "max_contextual_job_history": 10,
+                            "agent_id": "DATA_ANALYSIS_AGENT"
+                          },
+                          {
+                            "id": "4440ab38-3df0-465b-a66c-bf6acb0f1bc2",
+                            "name": "New name",
+                            "output_language": "EN",
+                            "job_mode": "AUTO",
+                            "max_contextual_job_history": 10,
+                            "agent_id": "DATA_ANALYSIS_AGENT"
+                          },
+                          {
+                            "id": "3eb5e294-11eb-4bf0-8854-7177c415d15c",
+                            "name": "trade_analyze_001",
+                            "output_language": "ZH-CN",
+                            "job_mode": "AUTO",
+                            "max_contextual_job_history": 10,
+                            "agent_id": "DATA_ANALYSIS_AGENT"
+                          },
+                          {
+                            "id": "ccca6d34-894f-4f6f-a8b5-c9df93126309",
+                            "name": "lhtest-old",
+                            "output_language": "ZH-CN",
+                            "job_mode": "AUTO",
+                            "max_contextual_job_history": 5,
+                            "agent_id": "DATA_ANALYSIS_AGENT"
+                          },
+                          {
+                            "id": "c28a1f47-da68-4456-bb0b-e85bf5a0e98e",
+                            "name": "lhtest-newest",
+                            "output_language": "ZH-TW",
+                            "job_mode": "AUTO",
+                            "max_contextual_job_history": 6,
+                            "agent_id": "DATA_ANALYSIS_AGENT"
+                          },
+                          {
+                            "id": "fbde9b45-69cd-408e-97d1-f874236aadac",
+                            "name": "General-session",
+                            "output_language": "ZH-CN",
+                            "job_mode": "AUTO",
+                            "max_contextual_job_history": 10,
+                            "agent_id": "DATA_ANALYSIS_AGENT"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/sessions/{id}": {
+      "post": {
+        "summary": "Modify session",
+        "deprecated": false,
+        "description": "修改会话配置。",
+        "tags": [
+          "Session"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "要修改的会话 ID。\n\n如需查看项目中存在的会话，请调用 [GET /v2/team/sessions](/api-reference/list-sessions) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "会话名称，至多可支持 128 个字符。如超过此限制，名称将被截断展示。"
+                  },
+                  "output_language": {
+                    "type": "string",
+                    "enum": [
+                      "AUTO",
+                      "EN",
+                      "ES",
+                      "AR",
+                      "PT",
+                      "ID",
+                      "JA",
+                      "RU",
+                      "HI",
+                      "FR",
+                      "DE",
+                      "VI",
+                      "TR",
+                      "PL",
+                      "IT",
+                      "KO",
+                      "ZH-CN",
+                      "ZH-TW"
+                    ],
+                    "default": "AUTO",
+                    "description": "Relyt AI 的回复语言。例如，当设置为 `EN` 时，则 Relyt AI 使用英语进行回复。如不指定，将使用默认值 `AUTO`，即 Relyt AI 会根据提示词自动选择合适的回复语言。可选值包括：\n\n- `AUTO`：根据提示词自动识别\n- `EN`：英语\n- `ES`：西班牙语\n- `AR`：阿拉伯语\n- `PT`：葡萄牙语\n- `ID`：印尼语\n- `JA`：日语\n- `RU`：俄语\n- `HI`：印地语\n- `FR`：法语\n- `DE`：德语\n- `VI`：越南语\n- `TR`：土耳其语\n- `PL`：波兰语\n- `IT`：意大利语\n- `KO`：韩语\n- `ZH-CN`：简体中文\n- `ZH-TW`：繁体中文"
+                  },
+                  "job_mode": {
+                    "type": "string",
+                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
+                    "enum": [
+                      "AUTO",
+                      "DATA_ANALYTICS"
+                    ],
+                    "default": "DATA_ANALYTICS"
+                  },
+                  "max_contextual_job_history": {
+                    "type": "integer",
+                    "description": "作为下一个任务上下文的历史任务数，取值范围为 `0` 到 `10`，默认值为 `10`。如设置为 `0`，则当前任务将不使用任何历史任务作为上下文信息。"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "description": "用户 ID，即您在组织中的唯一身份标识。"
+                  }
+                },
+                "required": [
+                  "name",
+                  "user_id"
+                ]
+              },
+              "example": {
+                "name": "hello",
+                "output_language": "EN",
+                "job_mode": "DATA_ANALYSIS",
+                "max_contextual_job_history": 3,
+                "user_id": "tmm-ddsdfsfgs"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {},
+                      "description": "操作成功则返回 null。"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "delete": {
+        "summary": "Delete session",
+        "deprecated": false,
+        "description": "删除会话。一旦删除，该会话及其任务历史记录将被永久删除，且无法恢复。",
+        "tags": [
+          "Session"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "要删除的会话 ID。\n\n如需查看项目中存在的会话，请调用 [GET /v2/team/sessions](/api-reference/list-sessions) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "string",
+                    "description": "用户 ID，即您在组织中的唯一身份标识。"
+                  }
+                },
+                "required": [
+                  "user_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {},
+                      "description": "操作成功则返回 null。"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "Get session",
+        "deprecated": false,
+        "description": "获取指定会话的配置信息。",
+        "tags": [
+          "Session"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "目标会话的 ID。\n\n如需查看项目中存在的会话，请调用 [GET /v2/team/sessions](/api-reference/list-sessions) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户 ID，即您在组织中的唯一身份标识。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "description": "会话对象。",
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "会话 ID，会话在当前项目中的唯一标识。"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "会话名称。如名称长度超过 128 个字符，将仅返回前 128 个字符。"
+                        },
+                        "output_language": {
+                          "type": "string",
+                          "enum": [
+                            "AUTO",
+                            "EN",
+                            "ES",
+                            "AR",
+                            "PT",
+                            "ID",
+                            "JA",
+                            "RU",
+                            "HI",
+                            "FR",
+                            "DE",
+                            "VI",
+                            "TR",
+                            "PL",
+                            "IT",
+                            "KO",
+                            "ZH-CN",
+                            "ZH-TW"
+                          ],
+                          "default": "AUTO",
+                          "description": "Relyt AI 的返回语言。可能值包括：\n\n- `AUTO`：根据提示词自动识别\n- `EN`：英语\n- `ES`：西班牙语\n- `AR`：阿拉伯语\n- `PT`：葡萄牙语\n- `ID`：印尼语\n- `JA`：日语\n- `RU`：俄语\n- `HI`：印地语\n- `FR`：法语\n- `DE`：德语\n- `VI`：越南语\n- `TR`：土耳其语\n- `PL`：波兰语\n- `IT`：意大利语\n- `KO`：韩语\n- `ZH-CN`：简体中文\n- `ZH-TW`：繁体中文"
+                        },
+                        "job_mode": {
+                          "type": "string",
+                          "description": "任务类型。可能值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定任务是数据分析任务还是信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 根据您的输入进行数据分析。",
+                          "enum": [
+                            "AUTO",
+                            "DATA_ANALYTICS"
+                          ],
+                          "default": "DATA_ANALYTICS"
+                        },
+                        "max_contextual_job_history": {
+                          "type": "integer",
+                          "description": "在会话中保留作为下一个任务上下文的任务数量，取值范围为 `0` 到 `10`，默认值为 `10`。值为 `0` 时表示会话中的任务在执行时不会使用历史任务执行结果作为上下文信息。"
+                        },
+                        "agent_id": {
+                          "type": "string",
+                          "enum": [
+                            "DATA_ANALYSIS_AGENT"
+                          ],
+                          "default": "DATA_ANALYSIS_AGENT",
+                          "description": "AI 智能体的 ID。该参数为保留参数，无实际意义，请忽略。"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "id": "cckrXXg68P8lmb59dg4yO",
+                        "name": "Analyze performance",
+                        "output_language": "HI",
+                        "job_mode": "AUTO",
+                        "max_contextual_job_history": 76,
+                        "agent_id": "DATA_ANALYSIS_AGENT"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/sessions/{id}/history": {
+      "get": {
+        "summary": "Get job history in session",
+        "deprecated": false,
+        "description": "获取指定会话中的任务记录。",
+        "tags": [
+          "Session"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "目标会话的 ID。\n\n如需查看项目中存在的会话，请调用 [GET /v2/team/sessions](/api-reference/list-sessions) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_number",
+            "in": "query",
+            "description": "分页返回的起始页码。如不指定，则使用默认值 `1`。",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "每页返回的记录数量。如不指定，则使用默认值 `10`。",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户 ID，即您在组织中的唯一身份标识。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total_items": {
+                          "type": "integer",
+                          "description": "返回的任务记录总数量。"
+                        },
+                        "page_number": {
+                          "type": "integer",
+                          "description": "当前页面的页码。"
+                        },
+                        "page_size": {
+                          "type": "integer",
+                          "description": "每页返回的记录数量。"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "description": "任务对象。",
+                            "type": "object",
+                            "properties": {
+                              "question": {
+                                "description": "您的提问（即提示词）。",
+                                "type": "object",
+                                "properties": {
+                                  "blocks": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "type": {
+                                          "type": "string",
+                                          "description": "The content type of the question block. Possible values are:\n- `MESSAGE`: The content is a piece of text.\n- `CODE`: The content a code snippet in Markdown format.",
+                                          "enum": [
+                                            "MESSAGE",
+                                            "CODE"
+                                          ]
+                                        },
+                                        "content": {
+                                          "type": "string",
+                                          "description": "The block content. It is a piece of text when the `type` is `MESSAGE`, and a code snippet when the `type` is `CODE`."
+                                        }
+                                      },
+                                      "description": "每个问题块的内容。",
+                                      "required": [
+                                        "type",
+                                        "content"
+                                      ]
+                                    },
+                                    "description": "构成整个问题的内容块列表。"
+                                  }
+                                },
+                                "required": [
+                                  "blocks"
+                                ]
+                              },
+                              "answer": {
+                                "description": "Relyt AI 的回答。",
+                                "type": "object",
+                                "properties": {
+                                  "blocks": {
+                                    "type": "array",
+                                    "items": {
+                                      "$ref": "#/components/schemas/BlockDTO",
+                                      "description": "构成整个答案的内容块列表。"
+                                    },
+                                    "description": "Relyt AI 的答案。"
+                                  }
+                                },
+                                "required": [
+                                  "blocks"
+                                ]
+                              },
+                              "job_id": {
+                                "type": "string",
+                                "description": "任务 ID，即任务在当前会话中的唯一标识。"
+                              }
+                            },
+                            "required": [
+                              "question",
+                              "answer",
+                              "job_id"
+                            ]
+                          },
+                          "description": "当前页面返回的任务记录列表。"
+                        }
+                      },
+                      "required": [
+                        "total_items",
+                        "page_number",
+                        "page_size",
+                        "records"
+                      ],
+                      "description": "返回的任务记录的分页列表。"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "total_items": 1,
+                        "page_number": 1,
+                        "page_size": 10,
+                        "records": [
+                          {
+                            "job_id": "job-1dsfasddfasgddsaffds",
+                            "question": {
+                              "blocks": [
+                                {
+                                  "type": "MESSAGE",
+                                  "content": "Check for negative values across all sales columns"
+                                }
+                              ]
+                            },
+                            "answer": {
+                              "blocks": [
+                                {
+                                  "type": "MESSAGE",
+                                  "content": "- Check for negative values across all sales columns.\n- Filter the DataFrame to retain only rows with no negative sales values.",
+                                  "group_id": "ba582fc9-bb36-4c5d-a8e8-d35bda6389cd",
+                                  "group_name": "Identify the channels with negative sales values by examining each day's sales data. Filter out the rows where any sales value is negative.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "CODE",
+                                  "content": "```python\n\nimport pandas as pd\n\ndef invoke(input_0: pd.DataFrame) -> pd.DataFrame:\n    '''\n    input_0: pd.DataFrame  SalesByChannelByDay_Summary_Demo.Sheet1_0_table_1.csv\n    '''\n    # Identify columns that represent sales data (all except the first column)\n    sales_columns = input_0.columns[1:]\n    \n    # Filter rows where any sales value is negative\n    filtered_df = input_0[~(input_0[sales_columns] < 0).any(axis=1)]\n    \n    # Assign the result to the output variable\n    output = filtered_df\n    \n    return output\n\n```",
+                                  "group_id": "ba582fc9-bb36-4c5d-a8e8-d35bda6389cd",
+                                  "group_name": "Identify the channels with negative sales values by examining each day's sales data. Filter out the rows where any sales value is negative.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "TABLE",
+                                  "content": "https://s3.amazonaws.com/powerdrilltest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/baf7d6d1-fb81-4fdb-bcdd-32923d214c7b.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=599&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9bcb5af552793f162e35f41d62fb9306cf90888924bfbdce81ea687265fddf83",
+                                  "group_id": "ba582fc9-bb36-4c5d-a8e8-d35bda6389cd",
+                                  "group_name": "Identify the channels with negative sales values by examining each day's sales data. Filter out the rows where any sales value is negative.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "MESSAGE",
+                                  "content": "- Sum the sales across all days for each channel.\n- Create a new DataFrame with the channel names and their corresponding total sales.",
+                                  "group_id": "47183fd1-307b-4408-9986-e9238d952ec1",
+                                  "group_name": "Calculate the overall sales trend for the identified channels with negative sales values. This involves summing up the sales across all days for each channel and analyzing the trend.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "CODE",
+                                  "content": "```python\n\nimport pandas as pd\n\ndef invoke(negative_sales_channels: pd.DataFrame) -> pd.DataFrame:\n    '''\n    negative_sales_channels: pd.DataFrame  negative_sales_channels.csv\n    '''\n    # Sum the sales across all days for each channel\n    total_sales = negative_sales_channels.iloc[:, 1:].sum(axis=1)\n    \n    # Create a new DataFrame with the channel names and their corresponding total sales\n    output = pd.DataFrame({\n        'Channel': negative_sales_channels.iloc[:, 0],\n        'Total Sales': total_sales\n    })\n    \n    return output\n\n```",
+                                  "group_id": "47183fd1-307b-4408-9986-e9238d952ec1",
+                                  "group_name": "Calculate the overall sales trend for the identified channels with negative sales values. This involves summing up the sales across all days for each channel and analyzing the trend.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "TABLE",
+                                  "content": "https://s3.amazonaws.com/powerdrilltest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/10cffac2-8bf3-45f4-86e6-1ed8457329f2.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=c6f5b522d2ddceea730304b86a45d5f5165f05f9fda3c1d275d11e9022c1e7ac",
+                                  "group_id": "47183fd1-307b-4408-9986-e9238d952ec1",
+                                  "group_name": "Calculate the overall sales trend for the identified channels with negative sales values. This involves summing up the sales across all days for each channel and analyzing the trend.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "MESSAGE",
+                                  "content": "- Replace any negative sales values with zero in the data.\n- Sum the sales across all days for each channel.\n- Create a new data structure with the summed sales values.",
+                                  "group_id": "6b93c2b1-8908-4c2b-afb2-2a81f2d24739",
+                                  "group_name": "Calculate the overall sales trend for the same channels but excluding the negative sales values. This involves setting negative values to zero or removing them and then summing up the sales across all days for each channel.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "CODE",
+                                  "content": "```python\n\nimport pandas as pd\n\ndef invoke(negative_sales_channels: pd.DataFrame) -> pd.DataFrame:\n    '''\n    negative_sales_channels: pd.DataFrame  negative_sales_channels.csv\n    '''\n    # Replace negative values with zero\n    negative_sales_channels.iloc[:, 1:] = negative_sales_channels.iloc[:, 1:].clip(lower=0)\n    \n    # Sum the sales across all days for each channel\n    sales_sum = negative_sales_channels.iloc[:, 1:].sum(axis=1)\n    \n    # Create a new DataFrame with the summed sales values\n    output = pd.DataFrame({\n        'Channel': negative_sales_channels.iloc[:, 0],\n        'Total Sales': sales_sum\n    })\n    \n    return output\n\n```",
+                                  "group_id": "6b93c2b1-8908-4c2b-afb2-2a81f2d24739",
+                                  "group_name": "Calculate the overall sales trend for the same channels but excluding the negative sales values. This involves setting negative values to zero or removing them and then summing up the sales across all days for each channel.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "TABLE",
+                                  "content": "https://s3.amazonaws.com/powerdrilltest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/f4c99616-dd7c-48b1-8a35-d3141d732c36.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=d21a8d939ab09547bc201754ba253ca6c0d1da5361752f2228237e3ff59be256",
+                                  "group_id": "6b93c2b1-8908-4c2b-afb2-2a81f2d24739",
+                                  "group_name": "Calculate the overall sales trend for the same channels but excluding the negative sales values. This involves setting negative values to zero or removing them and then summing up the sales across all days for each channel.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "MESSAGE",
+                                  "content": "- Merge the two datasets on the 'Channel' column to align sales data for comparison.\n- Calculate the difference in 'Total Sales' between the datasets for each channel.\n- Store the results, including channel name and calculated difference, in a new dataset.",
+                                  "group_id": "3488f538-f7fc-4c0e-a265-b66e3a38d41e",
+                                  "group_name": "Compare the sales trends with and without negative sales values to determine the impact of negative sales on the overall sales trend for the affected channels.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "CODE",
+                                  "content": "```python\n\nimport pandas as pd\n\ndef invoke(sales_trend_with_negatives: pd.DataFrame, sales_trend_without_negatives: pd.DataFrame) -> pd.DataFrame:\n    # Merge the two DataFrames on the 'Channel' column\n    merged_df = pd.merge(sales_trend_with_negatives, sales_trend_without_negatives, on='Channel', suffixes=('_with_negatives', '_without_negatives'))\n    \n    # Calculate the difference in 'Total Sales' between the two DataFrames\n    merged_df['Sales Difference'] = merged_df['Total Sales_without_negatives'] - merged_df['Total Sales_with_negatives']\n    \n    # Create a new DataFrame to store the results\n    output = merged_df[['Channel', 'Sales Difference']]\n    \n    return output\n\n```",
+                                  "group_id": "3488f538-f7fc-4c0e-a265-b66e3a38d41e",
+                                  "group_name": "Compare the sales trends with and without negative sales values to determine the impact of negative sales on the overall sales trend for the affected channels.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "TABLE",
+                                  "content": "https://s3.amazonaws.com/powerdrilltest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/aaf4f2f7-e2db-4f2e-98ae-0bdd18f42333.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=19fcfe97c70bf40292b920ecbf0299c101e1de11e49b54fb8f62934b6e874f52",
+                                  "group_id": "3488f538-f7fc-4c0e-a265-b66e3a38d41e",
+                                  "group_name": "Compare the sales trends with and without negative sales values to determine the impact of negative sales on the overall sales trend for the affected channels.",
+                                  "stage": "Analyze"
+                                },
+                                {
+                                  "type": "MESSAGE",
+                                  "content": "\n\n`Analyzing Conclusions` \n\n### The impact of negative sales values on overall sales trends\n\n#### Sales variance analysis\n\n",
+                                  "group_id": "fd1a62e6-48cf-4ac1-8bac-025665444710",
+                                  "group_name": "Conclusions",
+                                  "stage": "Respond"
+                                },
+                                {
+                                  "type": "TABLE",
+                                  "content": "https://s3.amazonaws.com/powerdrilltest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/aaf4f2f7-e2db-4f2e-98ae-0bdd18f42333.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=19fcfe97c70bf40292b920ecbf0299c101e1de11e49b54fb8f62934b6e874f52",
+                                  "group_id": "fd1a62e6-48cf-4ac1-8bac-025665444710",
+                                  "group_name": "Conclusions",
+                                  "stage": "Respond"
+                                },
+                                {
+                                  "type": "MESSAGE",
+                                  "content": "\n\n- **Sales variance**：In all channels (including EC, JD, Tmall, WeChat, retail, corporate stores, outlets, and total), the sales difference is 0.0. This indicates that regardless of the presence of negative sales values, the sales trend has not changed.\n\n#### Conclusion and Insights\n- **The impact of negative sales values**：Based on the provided data, negative sales values have no impact on the overall sales trend of the affected channels, as the sales variance for all channels is 0.0.\n- **Data consistency**：The sales discrepancies across all channels are consistent, indicating that there are no anomalies or deviations caused by negative sales values during data processing or analysis.",
+                                  "group_id": "fd1a62e6-48cf-4ac1-8bac-025665444710",
+                                  "group_name": "Conclusions",
+                                  "stage": "Respond"
+                                },
+                                {
+                                  "type": "SOURCES",
+                                  "content": [
+                                    {
+                                      "source": "SalesByChannelByDay_Summary_Demo.xlsx",
+                                      "datasource_id": "cm2ej4wmo000001fcdkwbdrml",
+                                      "dataset_id": "cm2ej4vx900hp01l1o378zr9o",
+                                      "file_type": "xlsx",
+                                      "external_id": ""
+                                    }
+                                  ],
+                                  "group_id": "",
+                                  "group_name": "",
+                                  "stage": "Respond"
+                                },
+                                {
+                                  "type": "QUESTIONS",
+                                  "content": [
+                                    "Analyze the specific channels with negative sales values on different dates and discuss whether the sales strategies of these channels might lead to negative values.",
+                                    "Study the long-term impact of negative sales values on overall sales trends and assess whether adjustments to data analysis methods are needed to more accurately reflect the actual situation.",
+                                    "Investigate the source of negative sales values, whether they are related to returns, discounts, or other factors, and propose possible solutions to reduce the occurrence of negative values."
+                                  ],
+                                  "group_id": "-1",
+                                  "stage": "Respond"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/datasets/{id}/overview": {
+      "get": {
+        "summary": "Get dataset overview",
+        "deprecated": false,
+        "description": "获取数据集的基本信息，包括关键词、描述以及预生成的问题。",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "目标数据集的 ID。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户 ID，即您在组织中的唯一身份标识。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "$ref": "#/components/schemas/%E8%BF%94%E5%9B%9E%E6%A8%A1%E5%9E%8B",
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "数据集 ID，即数据集在项目中的唯一标识。"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "数据集名称。"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "数据集描述。"
+                        },
+                        "summary": {
+                          "type": "string",
+                          "description": "数据集中数据源的概述。"
+                        },
+                        "exploration_questions": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Relyt AI 预生成的问题，可以帮助更好地探索数据集中的数据。"
+                        },
+                        "keywords": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "数据集关键词，可以帮助更好地理解数据集内容。"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "description",
+                        "summary",
+                        "exploration_questions",
+                        "keywords"
+                      ],
+                      "description": "数据集对象。"
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "data"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "success example",
+                    "value": {
+                      "code": {
+                        "code": 0
+                      },
+                      "data": {
+                        "id": "dset-cm5axptyyxxx298",
+                        "name": "sales_indicators_2024",
+                        "description": "A dataset comprising 373 travel bookings with 15 attributes, offering insights into booking patterns, pricing strategies, and more",
+                        "summary": "This dataset contains 373 travel bookings with 15 attributes, enabling analysis of booking trends, pricing strategies, and travel agency dynamics.",
+                        "exploration_questions": [
+                          "How does the booking price trend over time based on the BookingTimestamp?",
+                          "How does the average booking price change with respect to the TravelDate?",
+                          "Are there any significant outliers in the booking prices, and what might be causing them?",
+                          "How does the average price vary between one-way and round-trip bookings?"
+                        ],
+                        "keywords": [
+                          "Travel Bookings",
+                          "Booking Trends",
+                          "Travel Agencies"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/datasets": {
+      "post": {
+        "summary": "Create dataset",
+        "deprecated": false,
+        "description": "创建数据集。\n\n数据集是相关数据源的集合。数据源可以是 Excel、CSV、PDF、Word、网页、Markdown、纯文本等格式。使用数据集可以更高效地访问和利用您的数据进行分析。您可以创建一个数据集，将所有用于特定分析的必要数据源存储其中。然后，在进行问答时，您只需将数据集与会话关联，即可访问数据集中的所有数据源。",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": [
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "数据集名称，至多可支持 128 个字符。如超过此限制，名称将被截断展示。"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "数据集描述，至多可支持 128 个字符。如果超过此限制，描述将被截断展示。"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "description": "用户 ID，即您在组织中的唯一身份标识。"
+                  }
+                },
+                "required": [
+                  "name",
+                  "user_id"
+                ]
+              },
+              "example": {
+                "name": "My dataset",
+                "description": "my default dataset"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "数据集 ID。\n\n如需 [上传](/api-reference/create-data-source) 数据源到该数据集或将其 [关联至任务](/api-reference/create-job) 进行数据分析和探索，请保存该数据集 ID。"
+                        }
+                      },
+                      "required": [
+                        "id"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "id": "dataset-adsdfasafdsfasdgasd"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "List datasets",
+        "deprecated": false,
+        "description": "返回数据集列表。\n\n该接口仅会返回与您的 API 密钥所在同一项目中的数据集。\n\n您可以指定搜索关键词，通过名称或描述进行数据集过滤。",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "description": "分页返回的起始页码。如不指定，则使用默认值 `1`。",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "每页返回的记录数量。如不指定，则使用默认值 `10`。",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "搜索关键词，最多支持 128 个字符。所有名称或描述中包含该关键词的数据集将被返回。\n\n如果省略此项，将列出项目中的所有数据集。",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户 ID，即您在组织中的唯一身份标识。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "page_number": {
+                          "type": "integer",
+                          "description": "当前页面的页码。"
+                        },
+                        "page_size": {
+                          "type": "integer",
+                          "description": "每页返回的数据集数量。"
+                        },
+                        "total_items": {
+                          "type": "integer",
+                          "description": "返回的数据集总数量。"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/DatasetDTO",
+                            "description": "数据集对象。"
+                          },
+                          "description": "当前页面返回的数据集列表。"
+                        }
+                      },
+                      "required": [
+                        "page_number",
+                        "page_size",
+                        "total_items",
+                        "records"
+                      ],
+                      "description": "返回的数据对象。"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "page_number": 1,
+                        "page_size": 10,
+                        "total_items": 1,
+                        "records": [
+                          {
+                            "id": "dataset-dasfadsgadsgas",
+                            "name": "mysql",
+                            "description": "mysql databases"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/datasets/{id}": {
+      "delete": {
+        "summary": "Delete dataset",
+        "deprecated": false,
+        "description": "删除数据集。一旦删除，该数据集中的所有数据源也将被永久删除，且无法恢复。",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "目标数据集 ID。您只能删除自己创建的数据集。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "string",
+                    "description": "用户 ID，即您在组织中的唯一身份标识。"
+                  }
+                },
+                "required": [
+                  "user_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {},
+                      "description": "操作成功则返回 null。"
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "Modify dataset",
+        "deprecated": false,
+        "description": "修改指定数据集的名称或描述。",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "目标数据集 ID。您只能修改自己创建的数据集。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "数据集的新名称，至多可支持 128 个字符。如超过此限制，名称将被截断展示。\n\n必须指定 `name` 或 `description` 中的至少一个。"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "数据集的新描述，至多可支持 50,000 个字符。如果超过此限制，描述将被截断展示。\n\n必须指定 `name` 或 `description` 中的至少一个。"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "description": "用户 ID，即您在组织中的唯一身份标识。"
+                  }
+                },
+                "required": [
+                  "user_id"
+                ]
+              },
+              "example": {
+                "name": "sales_data",
+                "description": "sales data of all regions",
+                "user_id": "tmm-dsadfdsafasdf"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {},
+                      "description": "操作成功则返回 null。"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/datasets/{id}/status": {
+      "get": {
+        "summary": "Get status summary of data sources in dataset",
+        "deprecated": false,
+        "description": "此接口会计算并返回指定数据集中处于每个状态的数据源数量。您可以使用该接口来检查数据集中的所有数据源是否已完成同步并可用于数据分析任务。\n\n只有当返回中的 `invalidCount` 和 `synchingCount` 均为 `0`时，才表示该数据集中的所有数据源都能用于问答。否则，Relyt AI 将无法使用未完成同步的数据源进行数据分析与探索。",
+        "tags": [
+          "Dataset"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "需要了解数据源状态的数据集 ID。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户 ID，即您在组织中的唯一身份标识。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "synched_count": {
+                          "type": "integer",
+                          "description": "已同步的数据源数量。"
+                        },
+                        "invalid_count": {
+                          "type": "integer",
+                          "description": "同步失败的数据源数量。"
+                        },
+                        "synching_count": {
+                          "type": "integer",
+                          "description": "等待同步或正在同步的数据源数量。"
+                        }
+                      },
+                      "description": "处于每个状态的数据源数量。\n\n请注意，只有当 `invalidCount` 和 `synchingCount` 都为 `0` 时，使用 Relyt AI 进行问答时才能使用数据集中的所有数据源。否则，Relyt AI 将无法使用未完成同步的数据源进行数据分析与探索。",
+                      "required": [
+                        "synched_count",
+                        "invalid_count",
+                        "synching_count"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "synched_count": 5,
+                        "invalid_count": 0,
+                        "synching_count": 0
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/datasets/{id}/datasources": {
+      "post": {
+        "summary": "Create data source",
+        "deprecated": false,
+        "description": "在指定数据集中创建数据源。您只能在自己创建的数据集中创建数据源。\n\n数据源可以为以下任意格式：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 或 **.xlsx**。",
+        "tags": [
+          "Data source"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "目标数据集 ID。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "数据源名称，需包含文件扩展名（例如 `example.csv`），至多可支持 128 个字符。如超过此限制，名称将被截断展示。"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "数据源的类型。设置为 **FILE**。",
+                    "title": "FILE"
+                  },
+                  "url": {
+                    "type": "string",
+                    "description": "文件 URL，用于公网访问该文件。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n仅支持以下扩展名的文件：.csv、.tsv、.md、.mdx、.json、.txt、.pdf、.pptx、.ppt、.doc、.docx、.xls 或 .xlsx。"
+                  },
+                  "file_object_key": {
+                    "type": "string",
+                    "description": "您本地上传文件的对象存储路径。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n支持的文件扩展名包括：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 或 **.xlsx**。\n\n如何获取文件的 `file_object_key`：\n\n当使用 [Upload file](/api-reference/upload-file) 接口完成文件上传后，会返回该文件的`file_object_key`。"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "description": "用户 ID，即您在组织中的唯一身份标识。"
+                  }
+                },
+                "required": [
+                  "name",
+                  "type",
+                  "user_id"
+                ]
+              },
+              "example": {
+                "name": "test.csv",
+                "type": "FILE",
+                "user_id": "tmm-dsfasdfasdfa",
+                "url": "https://s3.amazonaws.com/powerdrilltest/user/clvl4cad2001q01l1m522hxlu/upload/f9773f1e-cd68-489a-8121-d566ca9218b1.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240924T143419Z&X-Amz-SignedHeaders=host&X-Amz-Expires=599&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20240924%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9ca0c58d508926a5811818041d557ffb53c64025dae94c0855280d457c7089a2"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "description": "数据源对象。",
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "数据源 ID，即该数据源在数据集中的唯一标识。"
+                        },
+                        "dataset_id": {
+                          "type": "string",
+                          "description": "数据源所在的数据集 ID。"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "数据源名称。"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "数据源类型，固定为 **FILE**。",
+                          "enum": [
+                            "FILE"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "数据源的处理状态。可能值为：\n\n- `invalid`：等待处理中。\n- `synching`：正在处理中。\n- `synched`：已成功同步。",
+                          "enum": [
+                            "synching",
+                            "synched",
+                            "invalid"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "dataset_id",
+                        "name",
+                        "type",
+                        "status"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "id": "datasource-cadsgfsdagasgadsg",
+                        "dataset_id": "dataset-dagasdgasgasg",
+                        "name": "test.csv",
+                        "type": "FILE",
+                        "status": "pending"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "List data sources",
+        "deprecated": false,
+        "description": "返回指定数据集中的数据源列表。使用此接口时，请注意：\n\n- 确保指定数据集和您的 API Key 归属于同一项目。\n- 如需查看您在该项目中有访问权限的数据集，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
+        "tags": [
+          "Data source"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "目标数据集 ID。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page_number",
+            "in": "query",
+            "description": "分页返回的起始页码。如不指定，则使用默认值 `1`。",
+            "required": false,
+            "example": 0,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "每页返回的记录数量。如不指定，则使用默认值 `10`。",
+            "required": false,
+            "example": 0,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "数据源状态。指定该参数后，只有处于指定状态的数据源才会被返回。可选值包括：\n\n- `invalid`：等待处理中。\n- `synching`：正在处理中。\n- `synched`：已成功同步。\n\n如果未指定，将返回所有数据源。\n\n可以通过英文逗号分隔的列表指定多个状态，匹配任何状态的数据源将被返回。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "synching",
+                "invalid",
+                "synched"
+              ]
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户 ID，即您在组织中的唯一身份标识。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total_items": {
+                          "type": "integer",
+                          "description": "返回的数据源总数量。"
+                        },
+                        "page_size": {
+                          "type": "integer",
+                          "description": "每页返回的数据源数量。"
+                        },
+                        "page_number": {
+                          "type": "integer",
+                          "description": "当前页面的页码。"
+                        },
+                        "records": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "数据源 ID，即该数据源在数据集中的唯一标识。"
+                              },
+                              "dataset_id": {
+                                "type": "string",
+                                "description": "数据源所在的数据集 ID。"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "数据源名称。"
+                              },
+                              "type": {
+                                "type": "string",
+                                "description": "数据源类型，固定为 **FILE**。",
+                                "enum": [
+                                  "FILE"
+                                ]
+                              },
+                              "status": {
+                                "type": "string",
+                                "description": "数据源的处理状态。可能值为：\n\n- `invalid`：等待处理中。\n- `synching`：正在处理中。\n- `synched`：已成功同步。",
+                                "enum": [
+                                  "synching",
+                                  "synched",
+                                  "invalid"
+                                ]
+                              }
+                            },
+                            "description": "数据源对象。",
+                            "required": [
+                              "id",
+                              "dataset_id",
+                              "name",
+                              "type",
+                              "status"
+                            ]
+                          },
+                          "description": "当前页面返回的数据源列表。"
+                        }
+                      },
+                      "required": [
+                        "total_items",
+                        "page_size",
+                        "page_number",
+                        "records"
+                      ],
+                      "description": "返回的数据源分页列表。"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "total_items": 1,
+                        "page_size": 10,
+                        "page_number": 1,
+                        "records": [
+                          {
+                            "id": "datasource-cadsgfsdagasgadsg",
+                            "dataset_id": "dataset-dagasdgasgasg",
+                            "name": "test.csv",
+                            "type": "FILE",
+                            "status": "pending"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/datasets/{dataset_id}/datasources/{datasource_id}": {
+      "delete": {
+        "summary": "Delete data source",
+        "deprecated": false,
+        "description": "从指定的数据集中删除数据源。一旦删除，数据源将无法恢复。\n\n您只能删除自己创建的数据集中的数据源。",
+        "tags": [
+          "Data source"
+        ],
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "description": "目标数据集 ID。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasource_id",
+            "in": "path",
+            "description": "要删除的数据源 ID。\n\n如需查询指定数据集中的数据源，请调用 [GET /v2/team/datasets/{id}/datasources](/api-reference/list-data-sources) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user_id": {
+                    "type": "string",
+                    "description": "用户 ID，即您在组织中的唯一身份标识。"
+                  }
+                },
+                "required": [
+                  "user_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {},
+                      "description": "操作成功则返回 null。",
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "code"
+                  ]
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "get": {
+        "summary": "Get data source",
+        "deprecated": false,
+        "description": "获取指定数据源信息。",
+        "tags": [
+          "Data source"
+        ],
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "description": "目标数据源所在的数据集 ID。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasource_id",
+            "in": "path",
+            "description": "目标数据源 ID。\n\n如需查询指定数据集中的数据源，请调用 [GET /v2/team/datasets/{id}/datasources](/api-reference/list-data-sources) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户 ID，即您在组织中的唯一身份标识。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "数据源 ID，即该数据源在数据集中的唯一标识。"
+                        },
+                        "dataset_id": {
+                          "type": "string",
+                          "description": "数据源所在的数据集 ID。"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "数据源名称。"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "数据源类型，固定为 **FILE**。",
+                          "enum": [
+                            "FILE"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "数据源的处理状态。可能值为：\n\n- `invalid`：等待处理中。\n- `synching`：正在处理中。\n- `synched`：已成功同步。",
+                          "enum": [
+                            "synching",
+                            "synched",
+                            "invalid"
+                          ]
+                        }
+                      },
+                      "description": "数据源对象。",
+                      "required": [
+                        "id",
+                        "dataset_id",
+                        "name",
+                        "type",
+                        "status"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "id": "datasource-cadsgfsdagasgadsg",
+                        "dataset_id": "dataset-dagasdgasgasg",
+                        "name": "test.csv",
+                        "type": "FILE",
+                        "status": "pending"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/datasources": {
+      "post": {
+        "summary": "Create data source without specifying a dataset",
+        "deprecated": false,
+        "description": "该接口用于在不指定数据集的情况下，直接创建数据源。\n\n调用此接口时，Relyt AI 会自动为该数据源创建一个数据集。请保存返回中的数据集 ID，便于后续操作，如 [关联数据集至任务](/api-reference/create-job) 进行数据分析与探索。",
+        "tags": [
+          "Data source"
+        ],
+        "parameters": [
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataSourceConfig"
+              },
+              "example": {
+                "name": "test.csv",
+                "type": "FILE",
+                "file_object_key": "/tmp/sdgsagdsgsadgasdg"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "description": "数据源对象。",
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "数据源 ID，即该数据源在数据集中的唯一标识。"
+                        },
+                        "dataset_id": {
+                          "type": "string",
+                          "description": "数据源所在的数据集 ID。"
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "数据源名称。"
+                        },
+                        "type": {
+                          "type": "string",
+                          "description": "数据源类型，固定为 **FILE**。",
+                          "enum": [
+                            "FILE"
+                          ]
+                        },
+                        "status": {
+                          "type": "string",
+                          "description": "数据源的处理状态。可能值为：\n\n- `invalid`：等待处理中。\n- `synching`：正在处理中。\n- `synched`：已成功同步。",
+                          "enum": [
+                            "synching",
+                            "synched",
+                            "invalid"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "dataset_id",
+                        "name",
+                        "type",
+                        "status"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Success example:",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "id": "datasource-cadsgfsdagasgadsg",
+                        "datasetId": "dataset-dagasdgasgasg",
+                        "name": "test.csv",
+                        "type": "FILE",
+                        "status": "pending"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/datasets/{dataset_id}/datasources/{datasource_id}/presign": {
+      "post": {
+        "summary": "Presign data source ",
+        "deprecated": false,
+        "description": "该接口用于为指定数据源生成一个预签名 URL（Presigned URL），从而您可以通过该 URL 下载对应的数据源。\n\n预签名 URL 具有有效期，请确保在 URL 过期之前完成数据源的下载。",
+        "tags": [
+          "Data source"
+        ],
+        "parameters": [
+          {
+            "name": "dataset_id",
+            "in": "path",
+            "description": "目标数据源所在的数据集 ID。\n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "datasource_id",
+            "in": "path",
+            "description": "目标数据源 ID。\n\n如需查询指定数据集中的数据源，请调用 [GET /v2/team/datasets/{id}/datasources](/api-reference/list-data-sources) 接口。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "expires_in": {
+                    "type": "integer",
+                    "description": "预签名 URL 的过期时间，单位为秒（s）。最小值为 `60`，默认值为 `600`。",
+                    "default": 600
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "description": "用户 ID，即您在组织中的唯一身份标识。"
+                  }
+                },
+                "required": [
+                  "user_id"
+                ]
+              },
+              "example": {
+                "expires_in": 600
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "presigned_url": {
+                          "type": "string",
+                          "description": "预签名 URL，用于下载对应数据源。"
+                        },
+                        "expires_at": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "预签名 URL 的过期日期和时间。"
+                        }
+                      },
+                      "required": [
+                        "presigned_url",
+                        "expires_at"
+                      ],
+                      "description": "返回的数据对象。"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "presigned_url": "string",
+                        "expires_at": "2024-11-13T14:15:22.123Z"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/file/upload-datasource": {
+      "post": {
+        "summary": "Upload local file",
+        "deprecated": false,
+        "description": "上传本地文件。支持的文件格式包括：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 或 **.xlsx**。\n\n您可以使用此接口上传本地文件，然后使用获得的 `file_object_key` 来创建数据源。详细操作指南，请参考 [如何上传本地文件](/developer-guides/upload-file)。",
+        "tags": [
+          "File"
+        ],
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "description": "文件的 MIME 类型。可选值包括：\n\n- `text/csv`：如文件扩展名为 `.csv`。\n- `text/plain`：如文件扩展名为 `.txt`。\n- `text/markdown`：如文件扩展名为 `.md`。\n- `application/json`：如文件扩展名为 `.json`。\n- `application/pdf`：如文件扩展名为 `.pdf`。\n- `application/vnd.openxmlformats-officedocument.presentationml.presentation`：如文件扩展名为 `.pptx`。\n- `application/vnd.openxmlformats-officedocument.wordprocessingml.document`：如文件扩展名为 `.docx`。\n- `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`：如文件扩展名为 `.xlsx`。\n- `application/vnd.ms-powerpoint`：如文件扩展名为 `.ppt`。\n- `text/tab-separated-values`：如文件扩展名为 `.tsv`。",
+            "required": true,
+            "example": "multipart/form-data",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "format": "binary",
+                    "type": "string",
+                    "description": "要上传的文件。该字段必填，且应当包含文件数据。例如，`--form 'file=@\"/Users/jiaoqi/Downloads/0f9a7ebd-7a2a-454a-8cd9-96accffa3107.csv\"'`。",
+                    "example": ""
+                  },
+                  "user_id": {
+                    "description": "用户 ID，即您在组织中的唯一身份标识。",
+                    "example": "",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "file",
+                  "user_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "file_object_key": {
+                          "type": "string",
+                          "description": "文件的对象存储路径。"
+                        }
+                      },
+                      "required": [
+                        "file_object_key"
+                      ],
+                      "description": "返回的数据对象。"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Success example:",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "file_object_key": "/tmp/sdgsagdsgsadgasdg.csv"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/v2/team/jobs": {
+      "post": {
+        "summary": "Create job",
+        "deprecated": false,
+        "description": "分析或探索您的数据。您可以通过此接口根据您的数据进行提问，立即获取洞察。\n\n在 Relyt AI 中，**任务（Job）** 即 Relyt AI 根据您的请求（例如提示词或其他工作流）而生成并执行的问答过程。",
+        "tags": [
+          "Job"
+        ],
+        "parameters": [
+          {
+            "name": "x-pd-api-key",
+            "in": "header",
+            "description": "用于访问目标项目的 API Key。\n\n了解更多信息，请参考 [身份认证](/introduction/authentication)。",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "x-pd-external-trace-id",
+            "in": "header",
+            "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "session_id": {
+                    "type": "string",
+                    "description": "会话 ID。\n\n如需查看项目中存在的会话，请调用 [GET /v2team/sessions](/api-reference/list-sessions) 接口。"
+                  },
+                  "stream": {
+                    "type": "boolean",
+                    "description": "是否使用流式返回。如果设置为 `true`，Relyt AI 将实时向客户端发送回答更新，持续传输实时可用的数据。如果设置为 `false`，则在整个回答完成后，一次性返回完整的响应。\n\n如不指定，则使用默认值 `false`。\n\n关于如何理解流式返回的内容，请参考 [流式返回中的内容说明](/api-reference/streaming#content-description)。",
+                    "default": false
+                  },
+                  "question": {
+                    "type": "string",
+                    "description": "您的问题（即提示词）。"
+                  },
+                  "dataset_id": {
+                    "type": "string",
+                    "description": "任务关联的数据集 ID。 \n\n如需查询您有访问权限的数据集列表，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。"
+                  },
+                  "datasource_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "指定在任务中使用的数据源的 ID。最多可以指定 1,000 个数据源。"
+                  },
+                  "output_language": {
+                    "type": "string",
+                    "description": "Relyt AI 的回复语言。例如，当设置为 `ZH-CN` 时，则 Relyt AI 以简体中文回复。可选值包括：\n\n- `AUTO`：根据提示词自动识别\n- `EN`：英语\n- `ES`：西班牙语\n- `AR`：阿拉伯语\n- `PT`：葡萄牙语\n- `ID`：印尼语\n- `JA`：日语\n- `RU`：俄语\n- `HI`：印地语\n- `FR`：法语\n- `DE`：德语\n- `VI`：越南语\n- `TR`：土耳其语\n- `PL`：波兰语\n- `IT`：意大利语\n- `KO`：韩语\n- `ZH-CN`：简体中文\n- `ZH-TW`：繁体中文",
+                    "enum": [
+                      "AUTO",
+                      "EN",
+                      "ES",
+                      "AR",
+                      "PT",
+                      "ID",
+                      "JA",
+                      "RU",
+                      "HI",
+                      "FR",
+                      "DE",
+                      "VI",
+                      "TR",
+                      "PL",
+                      "IT",
+                      "KO",
+                      "ZH-CN",
+                      "ZH-TW"
+                    ],
+                    "default": "AUTO"
+                  },
+                  "job_mode": {
+                    "type": "string",
+                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则使用会话的 `job_mode` 设置。",
+                    "enum": [
+                      "AUTO",
+                      "DATA_ANALYTICS"
+                    ],
+                    "default": "AUTO"
+                  },
+                  "user_id": {
+                    "type": "string",
+                    "description": "用户 ID，即您在组织中的唯一身份标识。"
+                  }
+                },
+                "required": [
+                  "question",
+                  "session_id",
+                  "user_id"
+                ]
+              },
+              "example": {
+                "session_id": "cxxdgegeegeg3433fff",
+                "stream": true,
+                "question": "Hello World",
+                "dataset_id": "cm1gjmg8e0057r3x22v1fdu8m",
+                "datasource_ids": [
+                  "cm1gjmmoo0001h0x24uk1xgu9"
+                ],
+                "output_language": "AUTO",
+                "job_mode": "AUTO",
+                "answer_config": {
+                  "model_group": "default",
+                  "temperature": 21
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer",
+                      "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "job_id": {
+                          "type": "string",
+                          "description": "任务 ID，即会话中该任务的唯一标识。"
+                        },
+                        "blocks": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/BlockDTO",
+                            "description": "构成整个答案的内容块列表。"
+                          },
+                          "description": "构成完整答案的答案块列表。"
+                        }
+                      },
+                      "required": [
+                        "job_id",
+                        "blocks"
+                      ],
+                      "description": "任务对象。"
+                    }
+                  },
+                  "required": [
+                    "data",
+                    "code"
+                  ]
+                },
+                "examples": {
+                  "1": {
+                    "summary": "Stream=false",
+                    "value": {
+                      "code": 0,
+                      "data": {
+                        "job_id": "job-cm3ikdeuj02zk01l1yeuirt77",
+                        "blocks": [
+                          {
+                            "type": "CODE",
+                            "content": "```python\n\nimport pandas as pd\n\ndef invoke(input_0: pd.DataFrame) -> pd.DataFrame:\n    '''\n    input_0: pd.DataFrame  makeovermonday-a-century-of-global-deaths-from-disasters_decadal-deaths-disasters-type.csv\n    '''\n    # Group by 'Year' and sum the deaths for each type of disaster\n    aggregated_data = input_0.groupby('Year').sum().reset_index()\n    \n    # Select only the columns related to deaths\n    death_columns = [\n        'Deaths - Drought (decadal)', 'Deaths - Flood (decadal)', \n        'Deaths - Earthquake (decadal)', 'Deaths - Extreme weather (decadal)', \n        'Deaths - Extreme temperature (decadal)', 'Deaths - Volcanic activity (decadal)', \n        'Deaths - Wildfire (decadal)', 'Deaths - Glacial lake outburst flood (decadal)', \n        'Deaths - Dry mass movement (decadal)', 'Deaths - Wet mass movement (decadal)', \n        'Deaths - Fog (decadal)'\n    ]\n    \n    # Create a new DataFrame with the aggregated results\n    output = aggregated_data[['Year'] + death_columns]\n    \n    # Rename columns to be more descriptive\n    output.columns = ['Decade'] + [col.replace('Deaths - ', '').replace(' (decadal)', '') for col in death_columns]\n    \n    return output\n\n```",
+                            "group_id": "33063572-6e88-4912-8e2d-4166bcc8caee",
+                            "group_name": "Analyze the dataset to observe the trend of deaths caused by different types of natural disasters over the past century. This involves aggregating the data by decade and calculating the total number of deaths for each type of disaster to identify any changes in trends.",
+                            "stage": "Analyze"
+                          },
+                          {
+                            "type": "TABLE",
+                            "content": {
+                              "url": "https://static.powerdrill.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/e24b6a5f-fdb8-48ca-ae35-dc91ac8e8ef7.csv",
+                              "name": "trend_data.csv",
+                              "expires_at": "2024-11-21T09:56:34.290544Z"
+                            },
+                            "group_id": "33063572-6e88-4912-8e2d-4166bcc8caee",
+                            "group_name": "Analyze the dataset to observe the trend of deaths caused by different types of natural disasters over the past century. This involves aggregating the data by decade and calculating the total number of deaths for each type of disaster to identify any changes in trends.",
+                            "stage": "Analyze"
+                          },
+                          {
+                            "type": "IMAGE",
+                            "content": {
+                              "url": "https://static.powerdrill.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/81b75a33-a223-4954-9680-9f397872c8ad.png",
+                              "name": "Trend of Deaths from Natural Disasters Over the Century",
+                              "expires_at": "2024-11-21T09:56:34.290544Z"
+                            },
+                            "group_id": "7501680b-5879-441b-bd96-f58b1029ae17",
+                            "group_name": "Visualize the trend data to show how the number of deaths from different types of natural disasters has changed over the past century. Use line charts to represent the trends for each disaster type, which will help in understanding the impact of measures and technological advancements on reducing deaths.",
+                            "stage": "Analyze"
+                          },
+                          {
+                            "type": "MESSAGE",
+                            "content": "\n\n`Analyzing Conclusions` \n\n### Analysis of Trends in the Number of Deaths from Natural Disasters \n\n#### Data Analysis\n\n",
+                            "group_id": "b842aca7-6fd5-4190-85fa-97085e473877",
+                            "group_name": "Conclusions",
+                            "stage": "Respond"
+                          },
+                          {
+                            "type": "TABLE",
+                            "content": {
+                              "url": "https://static.powerdrill.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/e24b6a5f-fdb8-48ca-ae35-dc91ac8e8ef7.csv",
+                              "name": "trend_data.csv",
+                              "expires_at": "2024-11-21T09:56:34.290544Z"
+                            },
+                            "group_id": "b842aca7-6fd5-4190-85fa-97085e473877",
+                            "group_name": "Conclusions",
+                            "stage": "Respond"
+                          },
+                          {
+                            "type": "MESSAGE",
+                            "content": "\n\n- **Droughts and Floods**: In the early 20th century, droughts and floods caused extremely high death tolls, particularly during the 1920s and 1930s.\n- **Earthquakes and Extreme Weather**: Earthquakes and extreme weather also led to significant death tolls throughout the century, especially in the 1970s and 1990s.\n- **Extreme Temperatures and Volcanic Activity**: These disasters had relatively lower death tolls, but in certain decades, such as the 2000s, deaths caused by extreme temperatures increased.\n\n#### Trend Visualization\n\n",
+                            "group_id": "b842aca7-6fd5-4190-85fa-97085e473877",
+                            "group_name": "Conclusions",
+                            "stage": "Respond"
+                          },
+                          {
+                            "type": "IMAGE",
+                            "content": {
+                              "url": "https://static.powerdrill.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/81b75a33-a223-4954-9680-9f397872c8ad.png",
+                              "name": "Trend of Deaths from Natural Disasters Over the Century",
+                              "expires_at": "2024-11-21T09:56:34.290544Z"
+                            },
+                            "group_id": "b842aca7-6fd5-4190-85fa-97085e473877",
+                            "group_name": "Conclusions",
+                            "stage": "Respond"
+                          },
+                          {
+                            "type": "MESSAGE",
+                            "content": "\n\n- **Overall Trend**: The chart shows that although certain decades experienced spikes in death tolls caused by natural disasters, the overall trend is declining.\n- **Impact of Technology and Measures**: Over time, advancements in technology and the implementation of disaster prevention measures are likely key factors in reducing death tolls.\n\n#### Conclusions and Insights\n- **Technological Advancements**: Modern technological progress, such as improved early warning systems and better construction techniques, may have reduced the fatalities caused by earthquakes and extreme weather.\n- **Disaster Prevention Measures**: The enhancement of disaster prevention measures and emergency response capabilities on a global scale has likely contributed to the decreased fatality rates of natural disasters.",
+                            "group_id": "b842aca7-6fd5-4190-85fa-97085e473877",
+                            "group_name": "Conclusions",
+                            "stage": "Respond"
+                          },
+                          {
+                            "type": "SOURCES",
+                            "content": [
+                              {
+                                "source": "makeovermonday-a-century-of-global-deaths-from-disasters_decadal-deaths-disasters-type.csv",
+                                "datasource_id": "clxin6l9200oo01l1457bolx3",
+                                "dataset_id": "clxin6l8400ok01l1ff2m0s25",
+                                "file_type": "csv"
+                              }
+                            ],
+                            "group_id": "",
+                            "group_name": "",
+                            "stage": "Respond"
+                          },
+                          {
+                            "type": "QUESTIONS",
+                            "content": [
+                              "Analyze the trends in death tolls from different types of natural disasters over the past century and explore which disaster types have shown the most significant reduction in fatalities.",
+                              "Study the technological advancements and measures in responding to natural disasters across different regions globally, and analyze how these differences have influenced changes in death tolls in each region.",
+                              "Explore how future technological advancements and policy measures could further reduce fatalities caused by natural disasters, and assess their feasibility and potential impacts."
+                            ],
+                            "group_id": "-1",
+                            "stage": "Respond"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "x-pd-trace-id": {
+                "example": "",
+                "required": true,
+                "description": "Relyt AI 返回的 Trace ID。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "1": {
+                    "summary": "400",
+                    "value": {
+                      "code": 210021,
+                      "msg": "Job quota exceeded"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "403": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "1": {
+                    "summary": "403",
+                    "value": {
+                      "code": 1003,
+                      "msg": "insufficient.authentication"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "500": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "1": {
+                    "summary": "500",
+                    "value": {
+                      "code": 210020,
+                      "msg": "Something went wrong during job execution. Please try again."
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateSessionRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "会话名称，至多可支持 128 个字符。如超过此限制，名称将被截断展示。"
+          },
+          "output_language": {
+            "type": "string",
+            "enum": [
+              "AUTO",
+              "EN",
+              "ES",
+              "AR",
+              "PT",
+              "ID",
+              "JA",
+              "RU",
+              "HI",
+              "FR",
+              "DE",
+              "VI",
+              "TR",
+              "PL",
+              "IT",
+              "KO",
+              "ZH-CN",
+              "ZH-TW"
+            ],
+            "default": "AUTO",
+            "description": "Relyt AI 的回复语言。例如，当设置为 `EN` 时，则 Relyt AI 使用英语进行回复。如不指定，将使用默认值 `AUTO`，即 Relyt AI 会根据提示词自动选择合适的回复语言。可选值包括：\n\n- `AUTO`：根据提示词自动识别\n- `EN`：英语\n- `ES`：西班牙语\n- `AR`：阿拉伯语\n- `PT`：葡萄牙语\n- `ID`：印尼语\n- `JA`：日语\n- `RU`：俄语\n- `HI`：印地语\n- `FR`：法语\n- `DE`：德语\n- `VI`：越南语\n- `TR`：土耳其语\n- `PL`：波兰语\n- `IT`：意大利语\n- `KO`：韩语\n- `ZH-CN`：简体中文\n- `ZH-TW`：繁体中文"
+          },
+          "job_mode": {
+            "type": "string",
+            "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
+            "enum": [
+              "AUTO",
+              "DATA_ANALYTICS"
+            ],
+            "default": "DATA_ANALYTICS"
+          },
+          "max_contextual_job_history": {
+            "type": "integer",
+            "description": "作为下一个任务上下文的历史任务数，取值范围为 `0` 到 `10`，默认值为 `10`。如设置为 `0`，则当前任务将不使用任何历史任务作为上下文信息。"
+          },
+          "agent_id": {
+            "type": "string",
+            "enum": [
+              "DATA_ANALYSIS_AGENT"
+            ],
+            "default": "DATA_ANALYSIS_AGENT",
+            "description": "AI 智能体的 ID。该参数为保留参数，无需制定或设置为 **DATA_ANALYSIS_AGENT**。"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "用户 ID，即您在组织中的唯一身份标识。"
+          }
+        },
+        "required": [
+          "name",
+          "user_id"
+        ]
+      },
+      "SessionDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "会话 ID，会话在当前项目中的唯一标识。"
+          },
+          "name": {
+            "type": "string",
+            "description": "会话名称。如名称长度超过 128 个字符，将仅返回前 128 个字符。"
+          },
+          "output_language": {
+            "type": "string",
+            "enum": [
+              "AUTO",
+              "EN",
+              "ES",
+              "AR",
+              "PT",
+              "ID",
+              "JA",
+              "RU",
+              "HI",
+              "FR",
+              "DE",
+              "VI",
+              "TR",
+              "PL",
+              "IT",
+              "KO",
+              "ZH-CN",
+              "ZH-TW"
+            ],
+            "default": "AUTO",
+            "description": "Relyt AI 的返回语言。可能值包括：\n\n- `AUTO`：根据提示词自动识别\n- `EN`：英语\n- `ES`：西班牙语\n- `AR`：阿拉伯语\n- `PT`：葡萄牙语\n- `ID`：印尼语\n- `JA`：日语\n- `RU`：俄语\n- `HI`：印地语\n- `FR`：法语\n- `DE`：德语\n- `VI`：越南语\n- `TR`：土耳其语\n- `PL`：波兰语\n- `IT`：意大利语\n- `KO`：韩语\n- `ZH-CN`：简体中文\n- `ZH-TW`：繁体中文"
+          },
+          "job_mode": {
+            "type": "string",
+            "description": "任务类型。可能值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定任务是数据分析任务还是信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 根据您的输入进行数据分析。",
+            "enum": [
+              "AUTO",
+              "DATA_ANALYTICS"
+            ],
+            "default": "DATA_ANALYTICS"
+          },
+          "max_contextual_job_history": {
+            "type": "integer",
+            "description": "在会话中保留作为下一个任务上下文的任务数量，取值范围为 `0` 到 `10`，默认值为 `10`。值为 `0` 时表示会话中的任务在执行时不会使用历史任务执行结果作为上下文信息。"
+          },
+          "agent_id": {
+            "type": "string",
+            "enum": [
+              "DATA_ANALYSIS_AGENT"
+            ],
+            "default": "DATA_ANALYSIS_AGENT",
+            "description": "AI 智能体的 ID。该参数为保留参数，无实际意义，请忽略。"
+          }
+        },
+        "required": [
+          "name",
+          "id"
+        ]
+      },
+      "DatasourceDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "数据源 ID，即该数据源在数据集中的唯一标识。"
+          },
+          "dataset_id": {
+            "type": "string",
+            "description": "数据源所在的数据集 ID。"
+          },
+          "name": {
+            "type": "string",
+            "description": "数据源名称。"
+          },
+          "type": {
+            "type": "string",
+            "description": "数据源类型，固定为 **FILE**。",
+            "enum": [
+              "FILE"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "description": "数据源的处理状态。可能值为：\n\n- `invalid`：等待处理中。\n- `synching`：正在处理中。\n- `synched`：已成功同步。",
+            "enum": [
+              "synching",
+              "synched",
+              "invalid"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "type",
+          "dataset_id",
+          "status"
+        ]
+      },
+      "DatasetDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "数据集 ID，即该数据集在项目中的唯一标识。"
+          },
+          "name": {
+            "type": "string",
+            "description": "数据集名称。"
+          },
+          "description": {
+            "type": "string",
+            "description": "数据集描述。"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description"
+        ]
+      },
+      "返回模型": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "状态码。**0** 表示操作成功。其它值则表示操作失败。如需进行错误排查，请参阅 [错误码](/introduction/error-codes)。"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
+      "BlockDTO": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "答案块（Block）的内容类型。可能值为：\n\n- `MESSAGE`：表示内容是文本。\n- `CODE`：表示内容是代码片段。\n- `TABLE`：表示内容是表格。\n- `IMAGE`：表示内容是图片。\n- `SOURCE`：表示内容是答案块的参考来源。\n- `QUESTIONS`：即 Relyt AI 生成的建议问题，帮助引导您后续的数据探索和分析。",
+            "enum": [
+              "MESSAGE",
+              "CODE",
+              "TABLE",
+              "SOURCES",
+              "QUESTIONS"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "description": "答案块的内容，随 `type` 值而异：\n\n- 当 `type` 为 `MESSAGE` 时，内容为一段文本。\n- 当 `type` 为 `CODE` 时，内容为 Markdown 格式表示的代码片段。\n- 当 `type` 为 `TABLE` 时，内容为表格，包含如下构成参数：\n    - `name`：`.csv` 文件的名称。\n    - `url`：文件的 S3 Key 或 URL。\n    - `expires_at`：`url` 的过期时间。如需保存表格方便后续使用，请确保在 URL 过期之前完成下载。\n- 当 `type` 为 `IMAGE` 时，内容为一张图片，包含如下构成参数：\n    - `name`：图片的名称。\n    - `url`：图片的 S3 Key 或 URL。\n    - `expires_at`：`url` 的过期时间。如需保存图片方便后续使用，请确保在 URL 过期之前完成下载。\n- 当 `type` 为 `SOURCE` 时，内容为答案块的参考来源，包含如下构成参数：\n    - `source`：数据源的文件名。\n    - `datasourceId`：数据源 ID。\n    - `datasetId`：数据集 ID。\n    - `fileType`：数据源的文件扩展名。\n- 当 `type` 为 `QUESTIONS` 时，内容为 Relyt AI 生成的建议问题，帮助您引导后续的数据探索与分析。"
+          },
+          "group_id": {
+            "type": "string",
+            "description": "答案块所在的分组 ID。"
+          },
+          "group_name": {
+            "type": "string",
+            "description": "答案块所在的分组名称。"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "Analyze",
+              "Respond"
+            ],
+            "description": "Relyt AI 生成答案的过程分为两个阶段：`Analyze` 和 `Respond`。  \n\n- `Analyze` 阶段的答案块并非最终答案的构成部分，为分析过程中的输出，旨在帮助您理解答案的生成方式。\n- `Respond` 阶段的答案块是 Relyt AI 基于您的问题生成的最终答复。"
+          }
+        },
+        "required": [
+          "type",
+          "content",
+          "group_id",
+          "group_name",
+          "stage"
+        ]
+      },
+      "DataSourceConfig": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "数据源名称，需包含文件扩展名（例如 `example.csv`），至多可支持 128 个字符。如超过此限制，名称将被截断展示。"
+          },
+          "type": {
+            "type": "string",
+            "description": "数据源的类型。设置为 **FILE**。",
+            "title": "FILE"
+          },
+          "url": {
+            "type": "string",
+            "description": "文件 URL，用于公网访问该文件。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n仅支持以下扩展名的文件：.csv、.tsv、.md、.mdx、.json、.txt、.pdf、.pptx、.ppt、.doc、.docx、.xls 或 .xlsx。"
+          },
+          "file_object_key": {
+            "type": "string",
+            "description": "您本地上传文件的对象存储路径。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n支持的文件扩展名包括：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 或 **.xlsx**。\n\n如何获取文件的 `file_object_key`：\n\n当使用 [Upload file](/api-reference/upload-file) 接口完成文件上传后，会返回该文件的`file_object_key`。"
+          },
+          "user_id": {
+            "type": "string",
+            "description": "用户 ID，即您在组织中的唯一身份标识。"
+          }
+        },
+        "required": [
+          "type",
+          "name",
+          "user_id"
+        ]
+      }
+    },
+    "securitySchemes": {}
+  },
+  "servers": [
+    {
+      "url": "http://app.ai.relyt.cn/app/api",
+      "description": "体验环境"
+    }
+  ],
+  "security": {}
+}

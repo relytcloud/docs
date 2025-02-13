@@ -1,0 +1,47 @@
+---
+openapi: get /v2/team/datasets/{id}/status
+description: "获取数据集中每一种状态下的数据源数量。"
+mode: "wide"
+---
+
+
+此接口会计算并返回指定数据集中处于每个状态的数据源数量。您可以使用该接口来检查数据集中的所有数据源是否已完成同步并可用于数据分析任务。
+
+只有当返回中的 `invalidCount` 和 `synchingCount` 均为 `0`时，才表示该数据集中的所有数据源都能用于问答。否则，Relyt AI 将无法使用未完成同步的数据源进行数据分析与探索。
+
+
+**请求示例：**
+<CodeGroup>
+```curl cURL
+curl --request GET \
+  --url https://ai.data.cloud/api/v2/team/datasets/{id}/status?user_id=tmm-dafasdfasdfasdf
+  --header 'x-pd-api-key: <api-key>'
+```
+
+```python Python
+import requests
+
+url = "https://ai.data.cloud/api/v2/team/datasets/{id}/status?user_id=tmm-dafasdfasdfasdf"
+
+headers = {"x-pd-api-key": "<api-key>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+</CodeGroup>
+
+**返回示例：**
+
+```json 200
+{
+  "code": 0,
+  "data": {
+    "synched_count": 5,
+    "invalid_count": 0,
+    "synching_count": 0
+  }
+}
+```
+
+

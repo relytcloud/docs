@@ -1,0 +1,50 @@
+---
+openapi: get /v2/team/datasets
+description: "返回数据集列表。
+
+该接口仅会返回与您的 API 密钥所在同一项目中的数据集。您可以指定搜索关键词，通过名称或描述进行数据集过滤。"
+mode: "wide"
+---
+
+
+
+**请求示例：**
+<CodeGroup>
+```curl cURL
+curl --request GET \
+  --url https://ai.data.cloud/api/v2/team/datasets?user_id=tmm-dafasdfasdfasdf
+  --header 'x-pd-api-key: <api-key>'
+```
+
+```python Python
+import requests
+
+url = "https://ai.data.cloud/api/v2/team/datasets?user_id=tmm-dafasdfasdfasdf"
+
+headers = {"x-pd-api-key": "<api-key>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+</CodeGroup>
+
+**返回示例：**
+
+```json 200
+{
+  "code": 0,
+  "data": {
+    "page_number": 1,
+    "page_size": 10,
+    "total_items": 1,
+    "records": [
+      {
+        "id": "dataset-dasfadsgadsgas",
+        "name": "mysql",
+        "description": "mysql databases"
+      }
+    ]
+  }
+}
+```

@@ -1,0 +1,36 @@
+---
+openapi: post /v2/team/file/upload-datasource
+description: "上传本地文件。"
+mode: "wide"
+---
+
+支持的文件格式包括：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 或 **.xlsx**。
+
+您可以使用此接口上传本地文件，然后使用获得的 `file_object_key` 来创建数据源。详细操作指南，请参考 [如何上传本地文件](/developer-guides/upload-file)。
+
+**请求示例：**
+
+```curl cURL
+curl --location 'http://ai.data.cloud/api/v2/team/file/upload-datasource' \
+--header 'x-pd-api-key: <api-key>' \
+--header 'x-pd-external-trace-id;' \
+--header 'Cookie: Cookie_1=value; metabase.DEVICE=f3cb3dbb-ef62-4026-845e-1480431c751d' \
+--form 'file=@"/Users/username/Downloads/c5168946-8f1a-4c92-a167-5e3be57745be.csv"' \
+--form 'user_id="tmm-cm5ao3yoe00zm01l1u1e7p3pj"'
+```
+
+
+**返回示例：**
+
+```json 200
+{
+  "code": 0,
+  "data": {
+    "file_object_key": "/tmp/sdgsagdsgsadgasdg.csv"
+  }
+}
+```
+
+
+
+

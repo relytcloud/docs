@@ -1,0 +1,52 @@
+---
+openapi: get /v2/team/datasets/{id}/datasources
+description: "返回指定数据集中的数据源列表。使用此接口时，请注意：
+
+- 确保指定数据集和您的 API Key 归属于同一项目。
+- 如需查看您在该项目中有访问权限的数据集，请调用 [GET /v2/team/datasets](/api-reference/list-datasets) 接口。"
+mode: "wide"
+---
+
+
+**请求示例：**
+<CodeGroup>
+```curl cURL
+curl --request GET \
+  --url https://ai.data.cloud/api/v2/team/datasets/{id}/datasources?user_id=tmm-dafasdfasdfasdf
+  --header 'x-pd-api-key: <api-key>'
+```
+
+```python Python
+import requests
+
+url = "https://ai.data.cloud/api/v2/team/datasets/{id}/datasources?user_id=tmm-dafasdfasdfasdf"
+
+headers = {"x-pd-api-key": "<api-key>"}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
+```
+</CodeGroup>
+
+**返回示例：**
+
+```json 200
+{
+  "code": 0,
+  "data": {
+    "total_items": 1,
+    "page_size": 10,
+    "page_number": 1,
+    "records": [
+      {
+        "id": "datasource-cadsgfsdagasgadsg",
+        "dataset_id": "dataset-dagasdgasgasg",
+        "name": "test.csv",
+        "type": "FILE",
+        "status": "pending"
+      }
+    ]
+  }
+}
+```
