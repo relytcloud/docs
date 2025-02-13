@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Team Open API Version 2 中文版本",
+    "title": "Team Open API Version 2",
     "description": "",
     "version": "1.0.0"
   },
@@ -3432,7 +3432,7 @@
           },
           "content": {
             "type": "string",
-            "description": "答案块的内容，随 `type` 值而异：\n\n- 当 `type` 为 `MESSAGE` 时，内容为一段文本。\n- 当 `type` 为 `CODE` 时，内容为 Markdown 格式表示的代码片段。\n- 当 `type` 为 `TABLE` 时，内容为表格，包含如下构成参数：\n    - `name`：`.csv` 文件的名称。\n    - `url`：文件的 S3 Key 或 URL。\n    - `expires_at`：`url` 的过期时间。如需保存表格方便后续使用，请确保在 URL 过期之前完成下载。\n- 当 `type` 为 `IMAGE` 时，内容为一张图片，包含如下构成参数：\n    - `name`：图片的名称。\n    - `url`：图片的 S3 Key 或 URL。\n    - `expires_at`：`url` 的过期时间。如需保存图片方便后续使用，请确保在 URL 过期之前完成下载。\n- 当 `type` 为 `SOURCE` 时，内容为答案块的参考来源，包含如下构成参数：\n    - `source`：数据源的文件名。\n    - `datasourceId`：数据源 ID。\n    - `datasetId`：数据集 ID。\n    - `fileType`：数据源的文件扩展名。\n- 当 `type` 为 `QUESTIONS` 时，内容为 Relyt AI 生成的建议问题，帮助您引导后续的数据探索与分析。"
+            "description": "答案块的内容，随 `type` 值而异：\n\n- 当 `type` 为 `MESSAGE` 时，内容为一段文本。\n- 当 `type` 为 `CODE` 时，内容为 Markdown 格式表示的代码片段。\n- 当 `type` 为 `TABLE` 时，内容为表格，包含如下构成参数：\n    - `name`：`.csv` 文件的名称。\n    - `url`：文件的 S3 Key 或 URL。\n    - `expires_at`：`url` 的过期时间。如需保存表格方便后续使用，请确保在 URL 过期之前完成下载。\n- 当 `type` 为 `IMAGE` 时，内容为一张图片，包含如下构成参数：\n    - `name`：图片的名称。\n    - `url`：图片的 S3 Key 或 URL。\n    - `expires_at`：`url` 的过期时间。如需保存图片方便后续使用，请确保在 URL 过期之前完成下载。\n- 当 `type` 为 `SOURCE` 时，内容为答案块的参考来源，包含如下构成参数：\n    - `source`：数据源的文件名。\n    - `datasource_id`：数据源 ID。\n    - `dataset_id`：数据集 ID。\n    - `file_type`：数据源的文件扩展名。\n- 当 `type` 为 `QUESTIONS` 时，内容为 Relyt AI 生成的建议问题，帮助您引导后续的数据探索与分析。"
           },
           "group_id": {
             "type": "string",
