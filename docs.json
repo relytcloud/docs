@@ -1,0 +1,41 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Mint Starter Kit",
+  "colors": {
+    "primary": "#803FE2",
+    "light": "#9E6CE8",
+    "dark": "#803FE2"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "API 参考",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction/overview",
+              "introduction/authentication",
+              "introduction/streaming",
+              "introduction/error-codes"
+            ]
+          },
+        ]
+      }
+    ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Git Hub",
+        "href": "https://github.com/orgs/relytcloud"
+      }
+    ]
+  }
