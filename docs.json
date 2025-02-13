@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Mint Starter Kit",
+  "name": "Relyt AI",
   "colors": {
     "primary": "#803FE2",
     "light": "#9E6CE8",
@@ -14,7 +14,7 @@
         "tab": "API 参考",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "快速开始",
             "pages": [
               "introduction/overview",
               "introduction/authentication",

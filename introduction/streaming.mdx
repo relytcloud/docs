@@ -1,18 +1,16 @@
 ---
-title: "Streaming"
-description: "Know all about our streaming capability"
+title: "流式传输"
+description: "了解我们的流式传输功能"
 icon: "grip-lines"
 ---
 
-Powerdrill Enterprise Open API supports streaming responses to clients, enabling partial results for specific requests. This functionality is implemented using the [Server-Sent Events (SSE)](https://html.spec.whatwg.org/multipage/server-sent-events.html#server-sent-events) standard.
+Relyt AI Open API 支持将流式响应发送给客户端，从而为特定请求提供部分结果。此功能通过 [服务器推送事件（SSE）](https://html.spec.whatwg.org/multipage/server-sent-events.html#server-sent-events) 标准实现。
 
+## 如何理解流式响应
 
+每个请求的响应由一系列响应块组成。当为请求启用流式传输模式时，Relyt AI 将实时向客户端发送更新，持续传送响应块，直到所有数据完全返回。 
 
-## How to understand streaming responses
-
-The response to each request consists of a series of response blocks. When streaming mode is enabled for a request, Powerdrill will send real-time updates to the client, delivering continuous response blocks as they becomes available. 
-
-The structure of a response block is as follows:
+响应块的结构如下：
 
 ```json
 {
@@ -33,79 +31,75 @@ The structure of a response block is as follows:
 }
 ```
 
-Each streaming response block contains the following fields:
+每个流式响应块包含以下字段：
 
-- `id` and `groupId`: The ID of the group to which the response block belongs.
+- `id` 和 `group_id`：响应块所属组的 ID。
 
-    A group in the streaming response is a collection of response blocks. For example, in a general job, each step in the `Analyze` stage is a group, and the entire `Respond` stage is a group.
+    流式响应中的组是响应块的集合。例如，在一个常规任务中，`Analyze` 阶段的每个步骤都是一个组，而整个 `Respond` 阶段是另一个组。
 
-- `content`: The content of the response block, which varies with the block type. For more details, see [Content description](#content-description).
+- `content`：响应块的内容，具体内容会根据块的类型有所不同。有关详细信息，请参阅 [内容说明](#内容说明)。
 
-- `created`: The timestamp indicating when the content was created.
+- `created`：表示内容创建时间的时间戳。
 
-- `groupId`: The ID of the group to which the response block belongs.  
+- `groupId`：响应块所属组的 ID。
 
-- `groupName`: The name of the group, such as `Conclusions`.
+- `groupName`：组的名称，例如 `Conclusions`。
 
-- `stage`: The stage to which the response block belongs. Two stages are available: `Analyze` and `Respond`.
-
-
-### Content description
-
-The value of `content` in each response block varies with the block content type:
-
-- When the block content type is `MESSAGE`:
-
-    The content is a piece of text.
-
-- When the block content type is `CODE`:
-
-    The content is a code snippet in Markdown format.
+- `stage`：响应块所属的阶段。共有两个阶段：`Analyze` 和 `Respond`。
 
 
-- When the block content type is `TABLE`:
+### 内容描述
 
-    The content represents a table, consisting of:
+每个响应块中 `content` 的值根据块的内容类型不同而有所变化：
+
+- 当块的内容类型为 `MESSAGE` 时：
+
+    内容为一段文本。
+
+- 当块的内容类型为 `CODE` 时：
+
+    内容为一个 Markdown 格式的代码片段。
+
+- 当块的内容类型为 `TABLE` 时：
+
+    内容表示一个表格，包含以下内容：
     
-    - `name`: The `.csv` file name.
+    - `name`：`.csv` 文件名。
     
-    - `url`: The S3 key or URL to the file.
+    - `url`：文件的 S3 键或 URL。
     
-    - `expires_at`: The expiration time for `url`. To save the table for future use, make sure to download it before it expires.
+    - `expires_at`：`url` 的过期时间。为了将表格保留供以后使用，请确保在其过期之前下载它。
 
+- 当块的内容类型为 `IMAGE` 时：
 
-- When the block content type is `IMAGE`:
-
-    The content represents an image, consisting of:
+    内容表示一张图片，包含以下内容：
     
-    - `name`: The image name.
+    - `name`：图片名称。
     
-    - `url`: The S3 key or URL to the image.
+    - `url`：图片的 S3 键或 URL。
     
-    - `expires_at`: The expiration time for `url`. To save the image for future use, make sure to download it before it expires.
+    - `expires_at`：`url` 的过期时间。为了将图片保留供以后使用，请确保在其过期之前下载它。
 
+- 当块的内容类型为 `SOURCES` 时：
 
-- When the block content type is `SOURCES`:
+    内容表示响应块的来源，包含以下内容：
 
-    The content represents the source of the response block, including:
+    - `source`：数据源的文件名。
 
-    - `source`: The file name of the data source.
+    - `datasource_id`：数据源的 ID。
 
-    - `datasourceId`: The ID of the data source.
+    - `dataset_id`：数据集的 ID。
 
-    - `datasetId`: The ID of the dataset.
+    - `file_type`：数据源文件的扩展名。
 
-    - `fileType`: The name extension of the data source file.
+- 当块的内容类型为 `QUESTIONS` 时：
 
-- When the block content type is `QUESTIONS`:
+    内容表示 Powerdrill 提示的后续问题。
 
-    The content represents follow-up questions suggested by Powerdrill. 
-
-
-Let's see an example.
+让我们来看一个示例。
 
 <Info>
-For details about the `POST /v1/jobs` endpoint, see [Create job](create-job).
+有关 `POST /v1/jobs` 端点的详细信息，请参阅 [创建任务](create-job)。
 </Info>
 
 
@@ -229,11 +223,9 @@ event:SOURCES
 data:{"id":"-1","model":"","choices":[{"delta":{"content":[{"id":"1","source":"makeovermonday-a-century-of-global-deaths-from-disasters_decadal-deaths-disasters-type.csv","datasourceId":"clxin6l9200oo01l1457bolx3","datasetId":"clxin6l8400ok01l1ff2m0s25","fileType":"csv","externalId":"clxin6l0h001901hzxhjaae6q"}]},"index":0}],"created":1731664202,"groupId":"-1","groupName":"","stage":"Analyze"}
 ```
 
+然而，如果禁用流式传输，Relyt AI 仅在整个响应准备好后才返回响应。
 
-
-However, if streaming is disabled, Powerdrill returns the response only after the entire response is ready.
-
-Let's use the same request as an example for a clear comparison. The only difference is that `stream` is set to `False`.
+我们以相同的请求为例进行清晰的对比。唯一的不同是将 `stream` 设置为 `False`。
 
 
 ```python
@@ -262,7 +254,7 @@ print(response.text)
 ```
 
 
-The response looks like this:
+响应如下所示：
 
 
 ```json Example response
