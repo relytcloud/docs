@@ -11,12 +11,32 @@ mode: "wide"
 **请求示例：**
 
 ```curl cURL
-curl --location 'https://ai.data.cloud/api/v2/team/file/upload-datasource' \
+curl --location 'https://app.ai.relyt.cn/app/api/v2/team/file/upload-datasource' \
 --header 'x-pd-api-key: <api-key>' \
 --header 'x-pd-external-trace-id;' \
 --header 'Cookie: Cookie_1=value; metabase.DEVICE=f3cb3dbb-ef62-4026-845e-1480431c751d' \
 --form 'file=@"/Users/username/Downloads/c5168946-8f1a-4c92-a167-5e3be57745be.csv"' \
 --form 'user_id="tmm-cm5ao3yoe00zm01l1u1e7p3pj"'
+```
+
+```Python python
+import requests
+
+url = "https://app.ai.relyt.cn/app/api/v2/team/file/upload-datasource"
+
+payload = {'user_id': 'tmm-cm5ao3yoe00zm01l1u1e7p3pj'}
+files=[
+  ('file',('c5168946-8f1a-4c92-a167-5e3be57745be.csv',open('/Users/jiaoqi/Downloads/c5168946-8f1a-4c92-a167-5e3be57745be.csv','rb'),'text/csv'))
+]
+headers = {
+  'x-pd-api-key': '<api-key>',
+  'x-pd-external-trace-id': '',
+  'Cookie': 'Cookie_1=value; metabase.DEVICE=f3cb3dbb-ef62-4026-845e-1480431c751d'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+print(response.text)
 ```
 
 
