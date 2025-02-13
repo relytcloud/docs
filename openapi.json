@@ -2768,16 +2768,6 @@
         ],
         "parameters": [
           {
-            "name": "Content-Type",
-            "in": "header",
-            "description": "文件的 MIME 类型。可选值包括：\n\n- `text/csv`：如文件扩展名为 `.csv`。\n- `text/plain`：如文件扩展名为 `.txt`。\n- `text/markdown`：如文件扩展名为 `.md`。\n- `application/json`：如文件扩展名为 `.json`。\n- `application/pdf`：如文件扩展名为 `.pdf`。\n- `application/vnd.openxmlformats-officedocument.presentationml.presentation`：如文件扩展名为 `.pptx`。\n- `application/vnd.openxmlformats-officedocument.wordprocessingml.document`：如文件扩展名为 `.docx`。\n- `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`：如文件扩展名为 `.xlsx`。\n- `application/vnd.ms-powerpoint`：如文件扩展名为 `.ppt`。\n- `text/tab-separated-values`：如文件扩展名为 `.tsv`。",
-            "required": true,
-            "example": "multipart/form-data",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
             "name": "x-pd-external-trace-id",
             "in": "header",
             "description": "您本地系统中设置的 Trace ID，至多支持 128 个字符。当请求发生错误时，可以将此 ID 提供给 Relyt AI 团队，协助进行故障排查。",
