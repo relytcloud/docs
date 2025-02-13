@@ -21,11 +21,10 @@
               "introduction/streaming",
               "introduction/error-codes"
             ]
-          },
+          }
         ]
       }
     ]
-    }
   },
   "logo": {
     "light": "/logo/light.svg",
@@ -39,3 +38,4 @@
       }
     ]
   }
+}
