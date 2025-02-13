@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Team Open API Version 2 中文版本",
+    "title": "Team Open API",
     "description": "",
     "version": "1.0.0"
   },
