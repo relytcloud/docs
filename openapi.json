@@ -1359,7 +1359,7 @@
                   },
                   "description": {
                     "type": "string",
-                    "description": "数据集描述，至多可支持 128 个字符。如果超过此限制，描述将被截断展示。"
+                    "description": "数据集描述，至多可支持 5000 个字符。如果超过此限制，描述将被截断展示。"
                   },
                   "user_id": {
                     "type": "string",
@@ -1718,7 +1718,7 @@
                   },
                   "description": {
                     "type": "string",
-                    "description": "数据集的新描述，至多可支持 128 个字符。如果超过此限制，描述将被截断展示。\n\n必须指定 `name` 或 `description` 中的至少一个。"
+                    "description": "数据集的新描述，至多可支持 5000 个字符。如果超过此限制，描述将被截断展示。\n\n必须指定 `name` 或 `description` 中的至少一个。"
                   },
                   "user_id": {
                     "type": "string",
@@ -2035,7 +2035,7 @@
                         "dataset_id": "dataset-dagasdgasgasg",
                         "name": "test.csv",
                         "type": "FILE",
-                        "status": "pending"
+                        "status": "synching"
                       }
                     }
                   }
@@ -2234,7 +2234,7 @@
                             "dataset_id": "dataset-dagasdgasgasg",
                             "name": "test.csv",
                             "type": "FILE",
-                            "status": "pending"
+                            "status": "synching"
                           }
                         ]
                       }
@@ -2479,7 +2479,7 @@
                         "dataset_id": "dataset-dagasdgasgasg",
                         "name": "test.csv",
                         "type": "FILE",
-                        "status": "pending"
+                        "status": "synching"
                       }
                     }
                   }
@@ -2606,10 +2606,10 @@
                       "code": 0,
                       "data": {
                         "id": "datasource-cadsgfsdagasgadsg",
-                        "datasetId": "dataset-dagasdgasgasg",
+                        "dataset_id": "dataset-dagasdgasgasg",
                         "name": "test.csv",
                         "type": "FILE",
-                        "status": "pending"
+                        "status": "synching"
                       }
                     }
                   }
