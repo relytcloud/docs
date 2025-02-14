@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Team Open API Version 2",
+    "title": "Team Open API Version 2 中文版本",
     "description": "",
     "version": "1.0.0"
   },
@@ -631,6 +631,9 @@
                 "required": [
                   "user_id"
                 ]
+              },
+              "example": {
+                "user_id": "tmm-dafasdfasdfasdf"
               }
             }
           }
@@ -1370,7 +1373,8 @@
               },
               "example": {
                 "name": "My dataset",
-                "description": "my default dataset"
+                "description": "my default dataset",
+                "user_id": "tmm-dafasdfasdfasdf"
               }
             }
           }
@@ -1625,6 +1629,9 @@
                 "required": [
                   "user_id"
                 ]
+              },
+              "example": {
+                "user_id": "tmm-dafasdfasdfasdf"
               }
             }
           }
@@ -2307,6 +2314,9 @@
                 "required": [
                   "user_id"
                 ]
+              },
+              "example": {
+                "user_id": "tmm-dafasdfasdfasdf"
               }
             }
           }
@@ -2524,6 +2534,7 @@
               "example": {
                 "name": "test.csv",
                 "type": "FILE",
+                "user_id": "tmm-dafasdfasdfasdf",
                 "file_object_key": "/tmp/sdgsagdsgsadgasdg"
               }
             }
@@ -2683,7 +2694,8 @@
                 ]
               },
               "example": {
-                "expires_in": 600
+                "expires_in": 600,
+                "user_id": "tmm-dafasdfasdfasdf"
               }
             }
           }
@@ -2964,6 +2976,7 @@
               },
               "example": {
                 "session_id": "cxxdgegeegeg3433fff",
+                "user_id": "tmm-dafasdfasdfasdf",
                 "stream": true,
                 "question": "Hello World",
                 "dataset_id": "cm1gjmg8e0057r3x22v1fdu8m",
@@ -2971,11 +2984,7 @@
                   "cm1gjmmoo0001h0x24uk1xgu9"
                 ],
                 "output_language": "AUTO",
-                "job_mode": "AUTO",
-                "answer_config": {
-                  "model_group": "default",
-                  "temperature": 21
-                }
+                "job_mode": "AUTO"
               }
             }
           }
