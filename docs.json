@@ -10,6 +10,26 @@
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
+      { "tab": "用户手册",
+        "groups": [
+          {
+            "group": "产品介绍",
+            "pages": [
+              "introduction"
+            ]
+          },
+          {
+            "group": "管理员指南",
+            "pages": [
+              "admin/overview",
+              "admin/teams",
+              "admin/users",
+              "admin/projects",
+              "admin/subscriptions"
+            ]
+          }
+        ]
+      },
       {
         "tab": "API 参考",
         "groups": [
