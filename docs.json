@@ -27,6 +27,15 @@
               "admin/projects",
               "admin/subscriptions"
             ]
+          },
+          {
+            "group": "用户指南",
+            "pages": [
+              "user/data-analysis",
+              "user/ai-agents",
+              "user/multimedia",
+              "user/datasets"
+            ]
           }
         ]
       },
