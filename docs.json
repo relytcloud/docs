@@ -15,7 +15,8 @@
           {
             "group": "产品介绍",
             "pages": [
-              "introduction"
+              "introduction",
+              "get-started"
             ]
           },
           {
