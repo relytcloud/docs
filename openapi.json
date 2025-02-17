@@ -80,7 +80,7 @@
                   },
                   "job_mode": {
                     "type": "string",
-                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
+                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据您的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
                     "enum": [
                       "AUTO",
                       "DATA_ANALYTICS"
@@ -515,7 +515,7 @@
                   },
                   "job_mode": {
                     "type": "string",
-                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
+                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据您的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
                     "enum": [
                       "AUTO",
                       "DATA_ANALYTICS"
@@ -2956,7 +2956,7 @@
                   },
                   "job_mode": {
                     "type": "string",
-                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则使用会话的 `job_mode` 设置。",
+                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据您的输入进行数据分析。\n\n如不指定，则使用会话的 `job_mode` 设置。",
                     "enum": [
                       "AUTO",
                       "DATA_ANALYTICS"
@@ -3259,7 +3259,7 @@
           },
           "job_mode": {
             "type": "string",
-            "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
+            "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据您的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
             "enum": [
               "AUTO",
               "DATA_ANALYTICS"
