@@ -29,7 +29,7 @@ Relyt 使用标准的 HTTP 响应码来指示 API 请求的结果。一般来说
 | :- | :- |
 | `authentication_error` | 认证错误，API Key 无效、已过期或已被撤销。可能是由于输入错误、格式问题或潜在的安全问题。 |
 | `invalid_request_error` | 请求错误，请求中包含无效参数。 |
-| `internal_server_error` | 内部服务器错误，表示处理请求时发生了 Powerdrill 端的问题，可能是临时问题、Bug 或系统故障。 |
+| `internal_server_error` | 内部服务器错误，表示处理请求时发生了 Relyt AI 端的问题，可能是临时问题、Bug 或系统故障。 |
 | `idempotency_error` | 幂等性错误，同一幂等密钥被用于不同的 API 接口或参数集时发生冲突。 |
 | `rate_limit_error` | 限速错误，你所在的团队超出了每秒 20 次 API 请求的上限。 |
 | `permission_error` | 您无权执行此操作。（操作：%s，资源：%s。） |
@@ -43,7 +43,7 @@ Relyt 使用标准的 HTTP 响应码来指示 API 请求的结果。一般来说
 | `300001` | Invalid parameters *`error_details>`* | 400 | 缺少必需的参数或参数配置错误。请检查所有参数是否设置正确。 |
 | `300002` | No permissions *`<error_details>`* | 200 | 您没有执行此操作所需的权限。 |
 | `300003` | *`<resource_name>`* not found | 200 | 项目中不存在指定资源。请确认资源 ID 是否正确。 |
-| `300004` | Invalid file extension | 200 | 文件扩展名不受 Powerdrill 支持。支持的扩展名包括 **.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 和 **.xlsx**。 |
+| `300004` | Invalid file extension | 200 | 文件扩展名不受 Relyt AI 支持。支持的扩展名包括 **.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 和 **.xlsx**。 |
 | `300005` | Empty file | 200 | 文件为空，请检查上传的文件是否正确。 |
 | `300006` | Insufficient storage space | 200 | 没有足够的可用存储空间上传文件。请先升级容量套餐。 |
 | `300007` | Failed to upload the file | 200 | 上传文件时发生错误。请检查文件格式是否受支持，然后再试。 |
