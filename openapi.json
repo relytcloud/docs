@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Team Open API Version 2",
+    "title": "Team Open API Version 2 中文版本",
     "description": "",
     "version": "1.0.0"
   },
@@ -80,7 +80,7 @@
                   },
                   "job_mode": {
                     "type": "string",
-                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据您的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
+                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
                     "enum": [
                       "AUTO",
                       "DATA_ANALYTICS"
@@ -109,13 +109,17 @@
                   "user_id"
                 ]
               },
-              "example": {
-                "name": "My session",
-                "output_language": "FR",
-                "job_mode": "AUTO",
-                "max_contextual_job_history": 10,
-                "agent_id": "DATA_ANALYSIS_AGENT",
-                "user_id": "tmm-dafasdfasdfasdf"
+              "examples": {
+                "1": {
+                  "value": {
+                    "name": "My session",
+                    "output_language": "FR",
+                    "job_mode": "AUTO",
+                    "max_contextual_job_history": 10,
+                    "agent_id": "DATA_ANALYSIS_AGENT",
+                    "user_id": "tmm-dafasdfasdfasdf"
+                  }
+                }
               }
             }
           }
@@ -515,7 +519,7 @@
                   },
                   "job_mode": {
                     "type": "string",
-                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据您的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
+                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
                     "enum": [
                       "AUTO",
                       "DATA_ANALYTICS"
@@ -536,12 +540,16 @@
                   "user_id"
                 ]
               },
-              "example": {
-                "name": "hello",
-                "output_language": "EN",
-                "job_mode": "DATA_ANALYSIS",
-                "max_contextual_job_history": 3,
-                "user_id": "tmm-ddsdfsfgs"
+              "examples": {
+                "1": {
+                  "value": {
+                    "name": "hello",
+                    "output_language": "EN",
+                    "job_mode": "DATA_ANALYSIS",
+                    "max_contextual_job_history": 3,
+                    "user_id": "tmm-ddsdfsfgs"
+                  }
+                }
               }
             }
           }
@@ -632,8 +640,12 @@
                   "user_id"
                 ]
               },
-              "example": {
-                "user_id": "tmm-dafasdfasdfasdf"
+              "examples": {
+                "1": {
+                  "value": {
+                    "user_id": "tmm-dafasdfasdfasdf"
+                  }
+                }
               }
             }
           }
@@ -1043,7 +1055,7 @@
                                 },
                                 {
                                   "type": "TABLE",
-                                  "content": "https://s3.amazonaws.com/relytaitest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/baf7d6d1-fb81-4fdb-bcdd-32923d214c7b.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=599&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9bcb5af552793f162e35f41d62fb9306cf90888924bfbdce81ea687265fddf83",
+                                  "content": "https://s3.amazonaws.com/powerdrilltest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/baf7d6d1-fb81-4fdb-bcdd-32923d214c7b.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=599&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9bcb5af552793f162e35f41d62fb9306cf90888924bfbdce81ea687265fddf83",
                                   "group_id": "ba582fc9-bb36-4c5d-a8e8-d35bda6389cd",
                                   "group_name": "Identify the channels with negative sales values by examining each day's sales data. Filter out the rows where any sales value is negative.",
                                   "stage": "Analyze"
@@ -1064,7 +1076,7 @@
                                 },
                                 {
                                   "type": "TABLE",
-                                  "content": "https://s3.amazonaws.com/relytaitest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/10cffac2-8bf3-45f4-86e6-1ed8457329f2.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=c6f5b522d2ddceea730304b86a45d5f5165f05f9fda3c1d275d11e9022c1e7ac",
+                                  "content": "https://s3.amazonaws.com/powerdrilltest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/10cffac2-8bf3-45f4-86e6-1ed8457329f2.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=c6f5b522d2ddceea730304b86a45d5f5165f05f9fda3c1d275d11e9022c1e7ac",
                                   "group_id": "47183fd1-307b-4408-9986-e9238d952ec1",
                                   "group_name": "Calculate the overall sales trend for the identified channels with negative sales values. This involves summing up the sales across all days for each channel and analyzing the trend.",
                                   "stage": "Analyze"
@@ -1085,7 +1097,7 @@
                                 },
                                 {
                                   "type": "TABLE",
-                                  "content": "https://s3.amazonaws.com/relytaitest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/f4c99616-dd7c-48b1-8a35-d3141d732c36.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=d21a8d939ab09547bc201754ba253ca6c0d1da5361752f2228237e3ff59be256",
+                                  "content": "https://s3.amazonaws.com/powerdrilltest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/f4c99616-dd7c-48b1-8a35-d3141d732c36.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=d21a8d939ab09547bc201754ba253ca6c0d1da5361752f2228237e3ff59be256",
                                   "group_id": "6b93c2b1-8908-4c2b-afb2-2a81f2d24739",
                                   "group_name": "Calculate the overall sales trend for the same channels but excluding the negative sales values. This involves setting negative values to zero or removing them and then summing up the sales across all days for each channel.",
                                   "stage": "Analyze"
@@ -1106,7 +1118,7 @@
                                 },
                                 {
                                   "type": "TABLE",
-                                  "content": "https://s3.amazonaws.com/relytaitest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/aaf4f2f7-e2db-4f2e-98ae-0bdd18f42333.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=19fcfe97c70bf40292b920ecbf0299c101e1de11e49b54fb8f62934b6e874f52",
+                                  "content": "https://s3.amazonaws.com/powerdrilltest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/aaf4f2f7-e2db-4f2e-98ae-0bdd18f42333.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=19fcfe97c70bf40292b920ecbf0299c101e1de11e49b54fb8f62934b6e874f52",
                                   "group_id": "3488f538-f7fc-4c0e-a265-b66e3a38d41e",
                                   "group_name": "Compare the sales trends with and without negative sales values to determine the impact of negative sales on the overall sales trend for the affected channels.",
                                   "stage": "Analyze"
@@ -1120,7 +1132,7 @@
                                 },
                                 {
                                   "type": "TABLE",
-                                  "content": "https://s3.amazonaws.com/relytaitest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/aaf4f2f7-e2db-4f2e-98ae-0bdd18f42333.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=19fcfe97c70bf40292b920ecbf0299c101e1de11e49b54fb8f62934b6e874f52",
+                                  "content": "https://s3.amazonaws.com/powerdrilltest/tmp_datasource_cache/code_result/clvl4cad2001q01l1m522hxlu/aaf4f2f7-e2db-4f2e-98ae-0bdd18f42333.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241018T104617Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20241018%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=19fcfe97c70bf40292b920ecbf0299c101e1de11e49b54fb8f62934b6e874f52",
                                   "group_id": "fd1a62e6-48cf-4ac1-8bac-025665444710",
                                   "group_name": "Conclusions",
                                   "stage": "Respond"
@@ -1371,10 +1383,14 @@
                   "user_id"
                 ]
               },
-              "example": {
-                "name": "My dataset",
-                "description": "my default dataset",
-                "user_id": "tmm-dafasdfasdfasdf"
+              "examples": {
+                "1": {
+                  "value": {
+                    "name": "My dataset",
+                    "description": "my default dataset",
+                    "user_id": "tmm-dafasdfasdfasdf"
+                  }
+                }
               }
             }
           }
@@ -1630,8 +1646,12 @@
                   "user_id"
                 ]
               },
-              "example": {
-                "user_id": "tmm-dafasdfasdfasdf"
+              "examples": {
+                "1": {
+                  "value": {
+                    "user_id": "tmm-dafasdfasdfasdf"
+                  }
+                }
               }
             }
           }
@@ -1729,10 +1749,14 @@
                   "user_id"
                 ]
               },
-              "example": {
-                "name": "sales_data",
-                "description": "sales data of all regions",
-                "user_id": "tmm-dsadfdsafasdf"
+              "examples": {
+                "1": {
+                  "value": {
+                    "name": "sales_data",
+                    "description": "sales data of all regions",
+                    "user_id": "tmm-dsadfdsafasdf"
+                  }
+                }
               }
             }
           }
@@ -1898,7 +1922,7 @@
       "post": {
         "summary": "Create data source",
         "deprecated": false,
-        "description": "在指定数据集中创建数据源。您只能在自己创建的数据集中创建数据源。\n\n数据源可以为以下任意格式：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 或 **.xlsx**。",
+        "description": "在指定数据集中创建数据源。您只能在自己创建的数据集中创建数据源。\n\n数据源可以为以下任意格式：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.docx**、**.xls** 或 **.xlsx**。",
         "tags": [
           "Data source"
         ],
@@ -1940,11 +1964,11 @@
                   },
                   "url": {
                     "type": "string",
-                    "description": "文件 URL，用于公网访问该文件。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n仅支持以下扩展名的文件：.csv、.tsv、.md、.mdx、.json、.txt、.pdf、.pptx、.ppt、.doc、.docx、.xls 或 .xlsx。"
+                    "description": "文件 URL，用于公网访问该文件。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n仅支持以下扩展名的文件：.csv、.tsv、.md、.mdx、.json、.txt、.pdf、.pptx、.docx、.xls 或 .xlsx。"
                   },
                   "file_object_key": {
                     "type": "string",
-                    "description": "您本地上传文件的对象存储路径。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n支持的文件扩展名包括：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 或 **.xlsx**。\n\n如何获取文件的 `file_object_key`：\n\n当使用 [Upload file](/api-reference/upload-file) 接口完成文件上传后，会返回该文件的`file_object_key`。"
+                    "description": "您本地上传文件的对象存储路径。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n支持的文件扩展名包括：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.docx**、**.xls** 或 **.xlsx**。\n\n如何获取文件的 `file_object_key`：\n\n当使用 [Upload file](/api-reference/upload-file) 接口完成文件上传后，会返回该文件的`file_object_key`。"
                   },
                   "user_id": {
                     "type": "string",
@@ -1957,11 +1981,15 @@
                   "user_id"
                 ]
               },
-              "example": {
-                "name": "test.csv",
-                "type": "FILE",
-                "user_id": "tmm-dsfasdfasdfa",
-                "url": "https://s3.amazonaws.com/relytaitest/user/clvl4cad2001q01l1m522hxlu/upload/f9773f1e-cd68-489a-8121-d566ca9218b1.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240924T143419Z&X-Amz-SignedHeaders=host&X-Amz-Expires=599&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20240924%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9ca0c58d508926a5811818041d557ffb53c64025dae94c0855280d457c7089a2"
+              "examples": {
+                "1": {
+                  "value": {
+                    "name": "test.csv",
+                    "type": "FILE",
+                    "user_id": "tmm-dsfasdfasdfa",
+                    "url": "https://s3.amazonaws.com/powerdrilltest/user/clvl4cad2001q01l1m522hxlu/upload/f9773f1e-cd68-489a-8121-d566ca9218b1.csv?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240924T143419Z&X-Amz-SignedHeaders=host&X-Amz-Expires=599&X-Amz-Credential=AKIARLSQLXURHEIDN4OZ%2F20240924%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=9ca0c58d508926a5811818041d557ffb53c64025dae94c0855280d457c7089a2"
+                  }
+                }
               }
             }
           }
@@ -2028,6 +2056,7 @@
                 "examples": {
                   "1": {
                     "summary": "成功示例",
+                    "description": "",
                     "value": {
                       "code": 0,
                       "data": {
@@ -2315,8 +2344,12 @@
                   "user_id"
                 ]
               },
-              "example": {
-                "user_id": "tmm-dafasdfasdfasdf"
+              "examples": {
+                "1": {
+                  "value": {
+                    "user_id": "tmm-dafasdfasdfasdf"
+                  }
+                }
               }
             }
           }
@@ -2531,11 +2564,15 @@
               "schema": {
                 "$ref": "#/components/schemas/DataSourceConfig"
               },
-              "example": {
-                "name": "test.csv",
-                "type": "FILE",
-                "user_id": "tmm-dafasdfasdfasdf",
-                "file_object_key": "/tmp/sdgsagdsgsadgasdg"
+              "examples": {
+                "1": {
+                  "value": {
+                    "name": "test.csv",
+                    "type": "FILE",
+                    "user_id": "tmm-dafasdfasdfasdf",
+                    "file_object_key": "/tmp/sdgsagdsgsadgasdg"
+                  }
+                }
               }
             }
           }
@@ -2693,9 +2730,13 @@
                   "user_id"
                 ]
               },
-              "example": {
-                "expires_in": 600,
-                "user_id": "tmm-dafasdfasdfasdf"
+              "examples": {
+                "1": {
+                  "value": {
+                    "expires_in": 600,
+                    "user_id": "tmm-dafasdfasdfasdf"
+                  }
+                }
               }
             }
           }
@@ -2774,7 +2815,7 @@
       "post": {
         "summary": "Upload local file",
         "deprecated": false,
-        "description": "上传本地文件。支持的文件格式包括：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 或 **.xlsx**。\n\n您可以使用此接口上传本地文件，然后使用获得的 `file_object_key` 来创建数据源。详细操作指南，请参考 [如何上传本地文件](/developer-guides/upload-file)。",
+        "description": "上传本地文件。支持的文件格式包括：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.docx**、**.xls** 或 **.xlsx**。\n\n您可以使用此接口上传本地文件，然后使用获得的 `file_object_key` 来创建数据源。详细操作指南，请参考 [如何上传本地文件](/developer-guides/upload-file)。",
         "tags": [
           "File"
         ],
@@ -2812,7 +2853,8 @@
                   "file",
                   "user_id"
                 ]
-              }
+              },
+              "examples": {}
             }
           }
         },
@@ -2850,6 +2892,7 @@
                 "examples": {
                   "1": {
                     "summary": "Success example:",
+                    "description": "",
                     "value": {
                       "code": 0,
                       "data": {
@@ -2956,7 +2999,7 @@
                   },
                   "job_mode": {
                     "type": "string",
-                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据您的输入进行数据分析。\n\n如不指定，则使用会话的 `job_mode` 设置。",
+                    "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则使用会话的 `job_mode` 设置。",
                     "enum": [
                       "AUTO",
                       "DATA_ANALYTICS"
@@ -2974,17 +3017,21 @@
                   "user_id"
                 ]
               },
-              "example": {
-                "session_id": "cxxdgegeegeg3433fff",
-                "user_id": "tmm-dafasdfasdfasdf",
-                "stream": true,
-                "question": "Hello World",
-                "dataset_id": "cm1gjmg8e0057r3x22v1fdu8m",
-                "datasource_ids": [
-                  "cm1gjmmoo0001h0x24uk1xgu9"
-                ],
-                "output_language": "AUTO",
-                "job_mode": "AUTO"
+              "examples": {
+                "1": {
+                  "value": {
+                    "session_id": "cxxdgegeegeg3433fff",
+                    "user_id": "tmm-dafasdfasdfasdf",
+                    "stream": true,
+                    "question": "Hello World",
+                    "dataset_id": "cm1gjmg8e0057r3x22v1fdu8m",
+                    "datasource_ids": [
+                      "cm1gjmmoo0001h0x24uk1xgu9"
+                    ],
+                    "output_language": "AUTO",
+                    "job_mode": "AUTO"
+                  }
+                }
               }
             }
           }
@@ -3047,7 +3094,7 @@
                           {
                             "type": "TABLE",
                             "content": {
-                              "url": "https://static.relytai.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/e24b6a5f-fdb8-48ca-ae35-dc91ac8e8ef7.csv",
+                              "url": "https://static.powerdrill.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/e24b6a5f-fdb8-48ca-ae35-dc91ac8e8ef7.csv",
                               "name": "trend_data.csv",
                               "expires_at": "2024-11-21T09:56:34.290544Z"
                             },
@@ -3058,7 +3105,7 @@
                           {
                             "type": "IMAGE",
                             "content": {
-                              "url": "https://static.relytai.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/81b75a33-a223-4954-9680-9f397872c8ad.png",
+                              "url": "https://static.powerdrill.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/81b75a33-a223-4954-9680-9f397872c8ad.png",
                               "name": "Trend of Deaths from Natural Disasters Over the Century",
                               "expires_at": "2024-11-21T09:56:34.290544Z"
                             },
@@ -3076,7 +3123,7 @@
                           {
                             "type": "TABLE",
                             "content": {
-                              "url": "https://static.relytai.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/e24b6a5f-fdb8-48ca-ae35-dc91ac8e8ef7.csv",
+                              "url": "https://static.powerdrill.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/e24b6a5f-fdb8-48ca-ae35-dc91ac8e8ef7.csv",
                               "name": "trend_data.csv",
                               "expires_at": "2024-11-21T09:56:34.290544Z"
                             },
@@ -3094,7 +3141,7 @@
                           {
                             "type": "IMAGE",
                             "content": {
-                              "url": "https://static.relytai.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/81b75a33-a223-4954-9680-9f397872c8ad.png",
+                              "url": "https://static.powerdrill.ai/tmp_datasource_cache/code_result/cm37bchx106e301l1v9yf67yc/81b75a33-a223-4954-9680-9f397872c8ad.png",
                               "name": "Trend of Deaths from Natural Disasters Over the Century",
                               "expires_at": "2024-11-21T09:56:34.290544Z"
                             },
@@ -3160,7 +3207,7 @@
                   "properties": {}
                 },
                 "examples": {
-                  "1": {
+                  "2": {
                     "summary": "400",
                     "value": {
                       "code": 210021,
@@ -3181,7 +3228,7 @@
                   "properties": {}
                 },
                 "examples": {
-                  "1": {
+                  "3": {
                     "summary": "403",
                     "value": {
                       "code": 1003,
@@ -3202,7 +3249,7 @@
                   "properties": {}
                 },
                 "examples": {
-                  "1": {
+                  "4": {
                     "summary": "500",
                     "value": {
                       "code": 210020,
@@ -3259,7 +3306,7 @@
           },
           "job_mode": {
             "type": "string",
-            "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据您的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据您的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
+            "description": "任务类型。可选值包括：\n\n- `AUTO`：Relyt AI 根据你的提问进行意图判断，决定该任务为数据分析任务或信息检索任务。\n- `DATA_ANALYTICS`：Relyt AI 会根据你的输入进行数据分析。\n\n如不指定，则采用默认值 `AUTO`。如果您明确地想要进行数据分析，我们建议您将值设置为 **DATA_ANALYTICS**，从而 Relyt AI 可以跳过意图识别步骤，加快问题处理速度。",
             "enum": [
               "AUTO",
               "DATA_ANALYTICS"
@@ -3482,11 +3529,11 @@
           },
           "url": {
             "type": "string",
-            "description": "文件 URL，用于公网访问该文件。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n仅支持以下扩展名的文件：.csv、.tsv、.md、.mdx、.json、.txt、.pdf、.pptx、.ppt、.doc、.docx、.xls 或 .xlsx。"
+            "description": "文件 URL，用于公网访问该文件。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n仅支持以下扩展名的文件：.csv、.tsv、.md、.mdx、.json、.txt、.pdf、.pptx、.docx、.xls 或 .xlsx。"
           },
           "file_object_key": {
             "type": "string",
-            "description": "您本地上传文件的对象存储路径。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n支持的文件扩展名包括：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.ppt**、**.doc**、**.docx**、**.xls** 或 **.xlsx**。\n\n如何获取文件的 `file_object_key`：\n\n当使用 [Upload file](/api-reference/upload-file) 接口完成文件上传后，会返回该文件的`file_object_key`。"
+            "description": "您本地上传文件的对象存储路径。\n\n`url` 和 `file_object_key` 之间必须且只能指定其一。\n\n支持的文件扩展名包括：**.csv**、**.tsv**、**.md**、**.mdx**、**.json**、**.txt**、**.pdf**、**.pptx**、**.docx**、**.xls** 或 **.xlsx**。\n\n如何获取文件的 `file_object_key`：\n\n当使用 [Upload file](/api-reference/upload-file) 接口完成文件上传后，会返回该文件的`file_object_key`。"
           },
           "user_id": {
             "type": "string",
